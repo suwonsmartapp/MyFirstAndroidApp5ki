@@ -15,6 +15,23 @@
         android:text="안녕하세요"
         android:textSize="45sp" />
 
+    <!-- ViewGroup 안에 ViewGroup을 넣을 수 있다 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
@@ -22,5 +39,6 @@
         android:layout_weight="2"
         android:scaleType="centerCrop"
         android:src="@drawable/man" />
+
 
 </LinearLayout>
