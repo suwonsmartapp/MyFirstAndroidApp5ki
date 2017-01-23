@@ -10,8 +10,10 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_margin="24dp"
         android:layout_weight="1"
         android:background="#ffff04"
+        android:padding="8dp"
         android:text="안녕하세요"
         android:textSize="45sp" />
 
