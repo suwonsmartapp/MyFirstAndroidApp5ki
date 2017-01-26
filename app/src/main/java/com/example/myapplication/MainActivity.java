@@ -1,12 +1,13 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView mQuantityTextView;
     private TextView mResultTextView;
     private CheckBox mCreamCheckBox;
+    private EditText mCommentEditText;
 
     // 수량
     private int mQuantity;
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mQuantityTextView = (TextView) findViewById(R.id.quantity_text);
         mResultTextView = (TextView) findViewById(R.id.result_text);
         mCreamCheckBox = (CheckBox) findViewById(R.id.cream_check);
+        mCommentEditText = (EditText) findViewById(R.id.comment_edit);
 
         // 무명클래스
         findViewById(R.id.minus_button).setOnClickListener(this);
@@ -97,7 +100,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.order_button:
                 String message = mResultTextView.getText().toString();
-                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+
+                // OrderCheckActivity 화면을 시작
+                Intent intent = new Intent(this, OrderCheckActivity.class);
+                // 데이터 담기
+                intent.putExtra("result", message);
+                intent.putExtra("comment", mCommentEditText.getText().toString());
+                startActivity(intent);
                 break;
         }
 

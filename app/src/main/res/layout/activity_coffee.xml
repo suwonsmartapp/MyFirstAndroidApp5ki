@@ -73,6 +73,12 @@
             android:text="결과"
             android:textAppearance="?android:textAppearance" />
 
+        <EditText
+            android:id="@+id/comment_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="할말을 쓰시오" />
+
         <Button
             android:id="@+id/order_button"
             android:layout_width="wrap_content"
