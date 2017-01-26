@@ -4,23 +4,13 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/hello_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:background="#38cd0f"
-        android:text="Hello"
-        android:textSize="32sp" />
-
-    <TextView
         android:id="@+id/wonjang_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerVertical="true"
         android:background="#9430ab"
-        android:text="오준석 원장"
+        android:text="안녕"
         android:textSize="32sp" />
 
     <TextView
@@ -62,9 +52,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/wonjang_text"
         android:background="#8b9189"
-        android:text="오른쪽"
+        android:text="위쪽"
         android:textSize="32sp" />
-
 
     <TextView
         android:layout_width="wrap_content"
@@ -82,5 +71,15 @@
         android:layout_toStartOf="@id/hello_text"
         android:background="#8b9189"
         android:text="왼쪽"
+        android:textSize="32sp" />
+
+    <TextView
+        android:id="@+id/hello_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:background="#38cd0f"
+        android:text="Hello"
         android:textSize="32sp" />
 </RelativeLayout>
