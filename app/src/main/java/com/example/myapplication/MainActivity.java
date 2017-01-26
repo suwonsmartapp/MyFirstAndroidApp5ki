@@ -3,6 +3,8 @@ package com.example.myapplication;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,12 +15,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final int QUANTITY_MIN = 0;
     public static final int QUANTITY_MAX = 10;
     public static final int COFFEE_PRICE = 3000;
+    public static final int CREAM_PRICE = 500;
 
     private TextView mQuantityTextView;
     private TextView mResultTextView;
+    private CheckBox mCreamCheckBox;
 
     // 수량
     private int mQuantity;
+
+    // 휘핑크림
+    private boolean mIsCream;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,19 +40,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // 레이아웃에서 특정 id를 인스턴스 변수와 연결
         mQuantityTextView = (TextView) findViewById(R.id.quantity_text);
         mResultTextView = (TextView) findViewById(R.id.result_text);
+        mCreamCheckBox = (CheckBox) findViewById(R.id.cream_check);
 
         // 무명클래스
         findViewById(R.id.minus_button).setOnClickListener(this);
         findViewById(R.id.plus_button).setOnClickListener(this);
         findViewById(R.id.order_button).setOnClickListener(this);
 
+        mCreamCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mIsCream = isChecked;
+                displayResult();
+            }
+        });
     }
 
     private void displayResult() {
         mQuantityTextView.setText("" + mQuantity);
 
-        String result = "가격 : " + (COFFEE_PRICE * mQuantity)
-                + "원\n감사합니다";
+        int total = COFFEE_PRICE * mQuantity;
+
+        if (mIsCream) {
+            total += CREAM_PRICE;
+        } else {
+            total -= CREAM_PRICE;
+        }
+
+        String result = String.format("가격 : %d원\n수량 : %d개\n휘핑크림 : %s\n감사합니다",
+                total,
+                mQuantity,
+                mIsCream);
         mResultTextView.setText(result);
     }
 
