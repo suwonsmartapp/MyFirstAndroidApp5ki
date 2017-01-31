@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.order_button:
                 String message = mResultTextView.getText().toString();
 
+
                 // OrderCheckActivity 화면을 시작
                 Intent intent = new Intent(this, OrderCheckActivity.class);
                 // 데이터 담기
