@@ -30,7 +30,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TargetActivity"></activity>
+        <activity android:name=".TargetActivity" />
+        <activity android:name=".IntentExamActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".IntentExam2Activity"></activity>
     </application>
 
 </manifest>
