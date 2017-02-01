@@ -38,7 +38,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".IntentExam2Activity"></activity>
+        <activity android:name=".IntentExam2Activity" />
+        <activity
+            android:name=".ImplicitActivity"
+            android:label="@string/title_activity_implicit"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
