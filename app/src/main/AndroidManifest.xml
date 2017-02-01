@@ -21,6 +21,12 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.DIAL" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="tel" />
+            </intent-filter>
         </activity>
         <activity android:name=".OrderCheckActivity" />
         <activity android:name=".StartActivityForResultActivity">
