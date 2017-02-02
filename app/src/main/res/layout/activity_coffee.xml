@@ -85,5 +85,11 @@
             android:layout_height="wrap_content"
             android:text="Order" />
 
+        <Chronometer
+            android:id="@+id/timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="50sp" />
+
     </LinearLayout>
 </ScrollView>

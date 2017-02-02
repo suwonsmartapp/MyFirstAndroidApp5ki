@@ -1,13 +1,17 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.Chronometer;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -27,6 +31,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CheckBox mCreamCheckBox;
     private EditText mCommentEditText;
 
+    private Chronometer mChronometer;
+
     // 수량
     private int mQuantity;
 
@@ -40,8 +46,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // 초기화
         init();
 
+
         // 레이아웃 표시
         setContentView(R.layout.activity_coffee);
+
+        mChronometer = (Chronometer) findViewById(R.id.timer);
+        mChronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+            @Override
+            public void onChronometerTick(Chronometer chronometer) {
+                Log.d(TAG, "onChronometerTick: " + chronometer.getText().toString());
+                sound();
+            }
+        });
 
         // 레이아웃에서 특정 id를 인스턴스 변수와 연결
         mQuantityTextView = (TextView) findViewById(R.id.quantity_text);
@@ -132,11 +148,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(this, "설정 아직 미구현", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_menu2:
+                sound();
                 return true;
             case R.id.action_menu3:
+                startChronometer();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void startChronometer() {
+        mChronometer.setBase(SystemClock.elapsedRealtime());
+        mChronometer.start();
+    }
+
+    private void sound() {
+        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.monkey);
+        mediaPlayer.start();
     }
 }
