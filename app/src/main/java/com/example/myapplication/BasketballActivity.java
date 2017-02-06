@@ -15,7 +15,9 @@ public class BasketballActivity extends AppCompatActivity {
 
         if (getIntent() != null) {
             Uri data = this.getIntent().getData();
-            Toast.makeText(this, data.toString(), Toast.LENGTH_SHORT).show();
+            if (data != null) {
+                Toast.makeText(this, data.toString(), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
