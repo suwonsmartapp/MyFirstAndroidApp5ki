@@ -3,14 +3,18 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ListViewActivity extends AppCompatActivity {
@@ -36,11 +40,13 @@ public class ListViewActivity extends AppCompatActivity {
 //                android.R.layout.simple_list_item_1,
 //                mDataList);
 
-        SimpleAdapter adapter = new SimpleAdapter(this,
-                mDataList,
-                android.R.layout.simple_list_item_2,
-                new String[]{"title", "desc"},
-                new int[]{android.R.id.text1, android.R.id.text2});
+//        SimpleAdapter adapter = new SimpleAdapter(this,
+//                mDataList,
+//                android.R.layout.simple_list_item_2,
+//                new String[]{"title", "desc"},
+//                new int[]{android.R.id.text1, android.R.id.text2});
+
+        MyAdapter adapter = new MyAdapter(mDataList);
 
         mListView.setAdapter(adapter);
 
@@ -71,5 +77,48 @@ public class ListViewActivity extends AppCompatActivity {
         map.put("desc", desc);
         map.put("intent", new Intent(this, cls));
         mDataList.add(map);
+    }
+
+    private static class MyAdapter extends BaseAdapter {
+
+
+        private final List<Map<String, Object>> mData;
+
+        public MyAdapter(List<Map<String, Object>> data) {
+            mData = data;
+        }
+
+        @Override
+        public int getCount() {
+            return mData.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return mData.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                convertView = LayoutInflater.from(parent.getContext())
+                        .inflate(android.R.layout.simple_list_item_2, parent, false);
+            }
+
+            TextView text1 = (TextView) convertView.findViewById(android.R.id.text1);
+            TextView text2 = (TextView) convertView.findViewById(android.R.id.text2);
+
+            Map<String, Object> item = mData.get(position);
+
+            text1.setText((String) item.get("title"));
+            text2.setText((String) item.get("desc"));
+
+            return convertView;
+        }
     }
 }
