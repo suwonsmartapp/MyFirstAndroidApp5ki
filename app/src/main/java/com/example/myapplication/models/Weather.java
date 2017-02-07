@@ -9,6 +9,12 @@ public class Weather {
     private String location;
     private String temperature;
 
+    public Weather(int imageRes, String location, String temperature) {
+        this.imageRes = imageRes;
+        this.location = location;
+        this.temperature = temperature;
+    }
+
     public int getImageRes() {
         return imageRes;
     }
