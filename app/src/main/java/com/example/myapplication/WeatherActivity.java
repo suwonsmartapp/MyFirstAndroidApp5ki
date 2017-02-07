@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import com.example.myapplication.adapters.WeatherAdapter;
 import com.example.myapplication.models.Weather;
@@ -15,6 +17,8 @@ import java.util.List;
 public class WeatherActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
     private ListView mListView;
+    private GridView mGridView;
+    private Spinner mSpinner;
     private WeatherAdapter mAdapter;
     private List<Weather> mWeatherList;
 
@@ -24,6 +28,8 @@ public class WeatherActivity extends AppCompatActivity implements AdapterView.On
         setContentView(R.layout.activity_weather);
 
         mListView = (ListView) findViewById(R.id.list_view);
+        mGridView = (GridView) findViewById(R.id.grid_view);
+        mSpinner = (Spinner) findViewById(R.id.spinner);
 
         // 날씨 데이터
         mWeatherList = new ArrayList<>();
@@ -49,10 +55,18 @@ public class WeatherActivity extends AppCompatActivity implements AdapterView.On
         // 어댑터
         mAdapter = new WeatherAdapter(this, mWeatherList);
 
+        // 어댑터를 뷰에 설정
         mListView.setAdapter(mAdapter);
+        mGridView.setAdapter(mAdapter);
+        mSpinner.setAdapter(mAdapter);
 
+        // 이벤트
         mListView.setOnItemClickListener(this);
         mListView.setOnItemLongClickListener(this);
+
+        mGridView.setOnItemClickListener(this);
+        mGridView.setOnItemLongClickListener(this);
+
     }
 
 
