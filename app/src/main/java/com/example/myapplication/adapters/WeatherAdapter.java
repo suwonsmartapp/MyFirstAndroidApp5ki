@@ -1,6 +1,8 @@
 package com.example.myapplication.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ import java.util.List;
  */
 
 public class WeatherAdapter extends BaseAdapter {
+    private static final String TAG = WeatherAdapter.class.getSimpleName();
     private Context mContext;
     private List<Weather> mData;
 
@@ -53,6 +56,7 @@ public class WeatherAdapter extends BaseAdapter {
                     .inflate(R.layout.item_weather, parent, false);
         }
 
+        Log.d(TAG, "getView: " + position);
         // 레이아웃 들고 오기
         ImageView imageView = (ImageView) convertView.findViewById(R.id.weather_image);
         TextView locationTextView = (TextView) convertView.findViewById(R.id.location_text);
@@ -66,6 +70,25 @@ public class WeatherAdapter extends BaseAdapter {
         locationTextView.setText(weather.getLocation());
         temperatureTextView.setText(weather.getTemperature());
 
+        // 홀수 줄은 빨간 색
+        if (position % 2 == 1) {
+            convertView.setBackgroundColor(Color.RED);
+        } else {
+            convertView.setBackgroundColor(Color.WHITE);
+        }
+
+        // 클릭 된 아이템이면 노란색
+        if (mSeletedPosition == position) {
+            convertView.setBackgroundColor(Color.YELLOW);
+        }
+
         return convertView;
+    }
+
+    // -1이면 선택된게 없다
+    private int mSeletedPosition = -1;
+
+    public void setSelect(int position) {
+        mSeletedPosition = position;
     }
 }

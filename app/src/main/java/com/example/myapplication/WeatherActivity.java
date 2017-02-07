@@ -2,6 +2,8 @@ package com.example.myapplication;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.myapplication.adapters.WeatherAdapter;
@@ -10,9 +12,10 @@ import com.example.myapplication.models.Weather;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WeatherActivity extends AppCompatActivity {
+public class WeatherActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private ListView mListView;
+    private WeatherAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +46,18 @@ public class WeatherActivity extends AppCompatActivity {
         weatherList.add(new Weather(R.drawable.sunny, "수원", "27도"));
 
         // 어댑터
-        WeatherAdapter adapter = new WeatherAdapter(this, weatherList);
+        mAdapter = new WeatherAdapter(this, weatherList);
 
-        mListView.setAdapter(adapter);
+        mListView.setAdapter(mAdapter);
+
+        mListView.setOnItemClickListener(this);
     }
 
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        mAdapter.setSelect(position);
+        // 데이터가 변경됨을 알려줌 = 다시 그려라
+        mAdapter.notifyDataSetChanged();
+    }
 }
