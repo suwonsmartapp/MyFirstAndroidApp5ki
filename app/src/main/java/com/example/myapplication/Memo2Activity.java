@@ -15,6 +15,8 @@ public class Memo2Activity extends AppCompatActivity {
     private EditText mTitleEditText;
     private EditText mContentEditText;
 
+    private long mId = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +28,9 @@ public class Memo2Activity extends AppCompatActivity {
         if (getIntent() != null) {
             if (getIntent().hasExtra("memo")) {
                 // 보여주기
+
+                mId = getIntent().getLongExtra("id", -1);
+
                 Memo memo = (Memo) getIntent().getSerializableExtra("memo");
                 mTitleEditText.setText(memo.getTitle());
                 mContentEditText.setText(memo.getContent());
@@ -64,6 +69,7 @@ public class Memo2Activity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.putExtra("title", mTitleEditText.getText().toString());
         intent.putExtra("content", mContentEditText.getText().toString());
+        intent.putExtra("id", mId);
         setResult(RESULT_OK, intent);
         finish();
     }

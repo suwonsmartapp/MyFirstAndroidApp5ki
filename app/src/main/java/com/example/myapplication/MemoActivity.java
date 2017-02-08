@@ -21,6 +21,7 @@ public class MemoActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private static final String TAG = MemoActivity.class.getSimpleName();
     public static final int REQUEST_CODE_NEW_MEMO = 1000;
+    public static final int REQUEST_CODE_UPDATE_MEMO = 1001;
 
     private List<Memo> mMemoList;
     private MemoAdapter mAdapter;
@@ -61,19 +62,26 @@ public class MemoActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == REQUEST_CODE_NEW_MEMO) {
-            if (resultCode == RESULT_OK) {
-                String title = data.getStringExtra("title");
-                String content = data.getStringExtra("content");
+        if (resultCode == RESULT_OK) {
+            String title = data.getStringExtra("title");
+            String content = data.getStringExtra("content");
 
+            if (requestCode == REQUEST_CODE_NEW_MEMO) {
+                // 새 메모
                 mMemoList.add(new Memo(title, content));
-                mAdapter.notifyDataSetChanged();
-
-                Log.d(TAG, "onActivityResult: " + title + ", " + content);
-                Toast.makeText(this, "저장 되었습니다", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "취소 되었습니다", Toast.LENGTH_SHORT).show();
+            } else if (requestCode == REQUEST_CODE_UPDATE_MEMO) {
+                long id = data.getLongExtra("id", -1);
+                // 수정
+                Memo memo = mMemoList.get((int) id);
+                memo.setTitle(title);
+                memo.setContent(content);
             }
+            mAdapter.notifyDataSetChanged();
+
+            Log.d(TAG, "onActivityResult: " + title + ", " + content);
+            Toast.makeText(this, "저장 되었습니다", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "취소 되었습니다", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -82,8 +90,9 @@ public class MemoActivity extends AppCompatActivity implements AdapterView.OnIte
         Memo memo = mMemoList.get(position);
 
         Intent intent = new Intent(this, Memo2Activity.class);
+        intent.putExtra("id", id);
         intent.putExtra("memo", memo);
 
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_CODE_UPDATE_MEMO);
     }
 }
