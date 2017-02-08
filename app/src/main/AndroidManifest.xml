@@ -44,7 +44,11 @@
             android:name=".MemoActivity"
             android:label="@string/title_activity_memo"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Memo2Activity"></activity>
+        <activity android:name=".Memo2Activity" />
+        <activity android:name=".BankActivity" />
+        <activity android:name=".OpenAccountActivity" />
+        <activity android:name=".AccountCheckActivity" />
+        <activity android:name=".AdminModeActivity"></activity>
     </application>
 
 </manifest>

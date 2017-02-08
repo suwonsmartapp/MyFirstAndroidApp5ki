@@ -36,6 +36,7 @@ public class ListViewActivity extends AppCompatActivity {
         addItem("커피앱", "CheckBox", MainActivity.class);
         addItem("날씨앱", "모델클래스를 활용하여 BaseAdapter 연습", WeatherActivity.class);
         addItem("메모장", "연습문제", MemoActivity.class);
+        addItem("은행 예제", "연습문제", BankActivity.class);
 
         // 어댑터
 //        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
