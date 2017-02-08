@@ -1,8 +1,10 @@
 package com.example.myapplication;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -112,10 +114,25 @@ public class MemoActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.action_delete:
-                deleteMemo(info.id);
+                // 삭제를 누르면 확인을 받고 싶다
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("확인");
+                builder.setMessage("정말 삭제하시겠습니까");
+                builder.setIcon(R.mipmap.ic_launcher);
+                // 긍정 버튼
+                builder.setPositiveButton("삭제", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteMemo(info.id);
+                    }
+                });
+                // 부정 버튼
+                builder.setNegativeButton("취소", null);
+                builder.show();
+
                 return true;
             default:
                 return super.onContextItemSelected(item);
