@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.myapplication.R;
 import com.example.myapplication.managers.Bank;
 
 public class BankActivity extends AppCompatActivity {

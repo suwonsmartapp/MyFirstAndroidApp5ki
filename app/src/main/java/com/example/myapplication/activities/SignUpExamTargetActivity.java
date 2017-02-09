@@ -1,9 +1,11 @@
-package com.example.myapplication;
+package com.example.myapplication.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
+
+import com.example.myapplication.R;
 
 public class SignUpExamTargetActivity extends AppCompatActivity {
 

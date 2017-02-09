@@ -12,6 +12,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.activities.BankActivity;
+import com.example.myapplication.activities.BasketballActivity;
+import com.example.myapplication.activities.MainActivity;
+import com.example.myapplication.activities.MemoActivity;
+import com.example.myapplication.activities.WeatherActivity;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

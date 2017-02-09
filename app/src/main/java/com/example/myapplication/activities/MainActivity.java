@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.activities;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -16,6 +16,8 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.myapplication.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
