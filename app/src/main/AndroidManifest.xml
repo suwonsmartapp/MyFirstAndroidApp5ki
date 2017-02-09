@@ -48,7 +48,8 @@
         <activity android:name=".activities.BankActivity" />
         <activity android:name=".activities.OpenAccountActivity" />
         <activity android:name=".activities.AccountCheckActivity" />
-        <activity android:name=".activities.AdminModeActivity"></activity>
+        <activity android:name=".activities.AdminModeActivity" />
+        <activity android:name=".activities.LifeCycleActivity" />
     </application>
 
 </manifest>
