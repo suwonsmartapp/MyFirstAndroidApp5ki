@@ -25,7 +25,11 @@ public class LifeCycleActivity extends AppCompatActivity {
 
         Log.d(TAG, "onCreate: ");
         
-        // 복원 여기도 되고
+        // 복원 여기도 되고 (null 체크 필요)
+//        if (savedInstanceState != null) {
+//            mScore = savedInstanceState.getInt("score");
+//            setScore(mScore);
+//        }
     }
 
     // 복원 여기도 됨
@@ -33,11 +37,9 @@ public class LifeCycleActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        // 복원
-        if (savedInstanceState != null) {
-            mScore = savedInstanceState.getInt("score");
-            setScore(mScore);
-        }
+        // 복원 (null 체크 불필요)
+        mScore = savedInstanceState.getInt("score");
+        setScore(mScore);
     }
 
     private void setScore(int score) {
