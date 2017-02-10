@@ -1,6 +1,8 @@
 package com.example.myapplication.activities;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -21,7 +23,6 @@ public class LifeCycleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_life_cycle);
 
         mScoreTextView = (TextView) findViewById(R.id.score_text);
-        setScore(mScore);
 
         Log.d(TAG, "onCreate: ");
         
@@ -30,6 +31,11 @@ public class LifeCycleActivity extends AppCompatActivity {
 //            mScore = savedInstanceState.getInt("score");
 //            setScore(mScore);
 //        }
+
+        // 읽어오기
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mScore = sharedPreferences.getInt("score", 0);
+        setScore(mScore);
     }
 
     // 복원 여기도 됨
@@ -62,6 +68,13 @@ public class LifeCycleActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         Log.d(TAG, "onPause: ");
+
+        // 저장
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("score", mScore);
+        editor.apply();     // 비동기 (async)
+//        editor.commit()   // 동기 (sync)
     }
 
     @Override
