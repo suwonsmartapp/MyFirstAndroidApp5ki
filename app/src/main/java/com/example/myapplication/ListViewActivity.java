@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.myapplication.activities.BankActivity;
 import com.example.myapplication.activities.BasketballActivity;
 import com.example.myapplication.activities.ColorFragmentActivity;
+import com.example.myapplication.activities.FragmentExam1Activity;
 import com.example.myapplication.activities.LifeCycleActivity;
 import com.example.myapplication.activities.ListViewExamActivity;
 import com.example.myapplication.activities.MainActivity;
@@ -49,6 +50,7 @@ public class ListViewActivity extends AppCompatActivity {
         addItem("LifeCycle", "생명주기", LifeCycleActivity.class);
         addItem("Fragment", "ColorFragment", ColorFragmentActivity.class);
         addItem("리스트뷰 연습", "리스트뷰 연습", ListViewExamActivity.class);
+        addItem("프래그먼트 연습", "프래그먼트 연습1", FragmentExam1Activity.class);
 
         // 어댑터
 //        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
