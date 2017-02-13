@@ -50,6 +50,7 @@
         <activity android:name=".activities.AccountCheckActivity" />
         <activity android:name=".activities.AdminModeActivity" />
         <activity android:name=".activities.LifeCycleActivity" />
+        <activity android:name=".activities.ColorFragmentActivity"></activity>
     </application>
 
 </manifest>
