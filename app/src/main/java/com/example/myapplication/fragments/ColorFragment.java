@@ -16,6 +16,8 @@ import com.example.myapplication.R;
 
 public class ColorFragment extends Fragment {
 
+    private int mColor = Color.RED;
+
     // 필수
     public ColorFragment() {
     }
@@ -24,11 +26,14 @@ public class ColorFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_color, container, false);
-        view.setBackgroundColor(Color.RED);
+        view.setBackgroundColor(mColor);
         return view;
     }
 
     public void setColor(int color) {
-        getView().setBackgroundColor(color);
+        mColor = color;
+        if (getView() != null) {
+            getView().setBackgroundColor(mColor);
+        }
     }
 }
