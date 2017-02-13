@@ -1,6 +1,5 @@
 package com.example.myapplication.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 
 import com.example.myapplication.R;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,6 +19,7 @@ import java.util.List;
 public class ListViewExamActivity extends AppCompatActivity implements View.OnClickListener {
 
     private List<Integer> mData;
+    private MyAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,29 +29,22 @@ public class ListViewExamActivity extends AppCompatActivity implements View.OnCl
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this);
 
-        if (getIntent().getSerializableExtra("data") != null) {
-            mData = (List<Integer>) getIntent().getSerializableExtra("data");
-        } else {
-            mData = new ArrayList<>();
-            for (int i = 1; i <= 100; i++) {
-                mData.add(i);
-            }
+        mData = new ArrayList<>();
+        for (int i = 1; i <= 100; i++) {
+            mData.add(i);
         }
 
-        MyAdapter adapter = new MyAdapter(mData);
+        mAdapter = new MyAdapter(mData);
 
         ListView listView = (ListView) findViewById(R.id.list_view);
-        listView.setAdapter(adapter);
+        listView.setAdapter(mAdapter);
     }
 
     @Override
     public void onClick(View v) {
         // 데이터 뒤집기
         Collections.reverse(mData);
-
-        Intent intent = new Intent(this, ListViewExamActivity.class);
-        intent.putExtra("data", (Serializable) mData);
-        startActivity(intent);
+        mAdapter.notifyDataSetChanged();
     }
 
     private static class MyAdapter extends BaseAdapter {
