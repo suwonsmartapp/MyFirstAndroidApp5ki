@@ -25,10 +25,10 @@ public class ViewPagerExamActivity extends AppCompatActivity {
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
 
         List<Fragment> fragmentList = new ArrayList<>();
-        fragmentList.add(ListViewFragment.newInstance(createLowerCaseAlphabetList()));
-        fragmentList.add(ListViewFragment.newInstance(createUpperCaseAlphabetList()));
-        fragmentList.add(ListViewFragment.newInstance(createHangulList()));
-        fragmentList.add(ListViewFragment.newInstance(createNumberAlphabetList()));
+        fragmentList.add(ListViewFragment.newInstance(createCharacterList('a', 'z')));
+        fragmentList.add(ListViewFragment.newInstance(createCharacterList('A', 'Z')));
+        fragmentList.add(ListViewFragment.newInstance(createCharacterList('ㄱ', 'ㅎ')));
+        fragmentList.add(ListViewFragment.newInstance(createCharacterList('0', '9')));
 
         MyAdapter adapter = new MyAdapter(getSupportFragmentManager(),
                 fragmentList,
@@ -38,42 +38,14 @@ public class ViewPagerExamActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    private List<String> createLowerCaseAlphabetList() {
+    private List<String> createCharacterList(char start, char end) {
         List<String> list = new ArrayList<>();
-        char ch = 'a';
-        for (char i = ch; i <= 'z'; i++) {
+        char ch = start;
+        for (char i = ch; i <= end; i++) {
             list.add(String.valueOf(i));
         }
         return list;
     }
-
-    private List<String> createUpperCaseAlphabetList() {
-        List<String> list = new ArrayList<>();
-        char ch = 'A';
-        for (char i = ch; i <= 'Z'; i++) {
-            list.add(String.valueOf(i));
-        }
-        return list;
-    }
-
-    private List<String> createHangulList() {
-        List<String> list = new ArrayList<>();
-        char ch = 'ㄱ';
-        for (char i = ch; i <= 'ㅎ'; i++) {
-            list.add(String.valueOf(i));
-        }
-        return list;
-    }
-
-    private List<String> createNumberAlphabetList() {
-        List<String> list = new ArrayList<>();
-        char ch = '0';
-        for (char i = ch; i <= '9'; i++) {
-            list.add(String.valueOf(i));
-        }
-        return list;
-    }
-
 
     private static class MyAdapter extends FragmentPagerAdapter {
         private List<Fragment> mmFragmentList;
