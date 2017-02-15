@@ -22,6 +22,7 @@ import com.example.myapplication.activities.ListViewExamActivity;
 import com.example.myapplication.activities.MainActivity;
 import com.example.myapplication.activities.MemoActivity;
 import com.example.myapplication.activities.ViewPagerActivity;
+import com.example.myapplication.activities.ViewPagerExamActivity;
 import com.example.myapplication.activities.WeatherActivity;
 
 import java.util.ArrayList;
@@ -55,6 +56,7 @@ public class ListViewActivity extends AppCompatActivity {
         addItem("프래그먼트 연습", "프래그먼트 연습1", FragmentExam1Activity.class);
         addItem("프래그먼트 콜백 연습", "콜백", ImageFragmentActivity.class);
         addItem("ViewPager", "", ViewPagerActivity.class);
+        addItem("ViewPager 연습문제", "TabLayout + ViewPager", ViewPagerExamActivity.class);
 
         // 어댑터
 //        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
