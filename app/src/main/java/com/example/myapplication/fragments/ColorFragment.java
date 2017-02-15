@@ -22,6 +22,14 @@ public class ColorFragment extends Fragment {
     public ColorFragment() {
     }
 
+    public static ColorFragment newInstance(int color) {
+        ColorFragment colorFragment = new ColorFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("color", color);
+        colorFragment.setArguments(bundle);
+        return colorFragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
