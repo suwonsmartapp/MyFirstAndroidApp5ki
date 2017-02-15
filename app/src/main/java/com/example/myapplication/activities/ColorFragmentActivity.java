@@ -21,6 +21,13 @@ public class ColorFragmentActivity extends AppCompatActivity {
 
         // 동적으로 프래그먼트 추가
         ColorFragment colorFragment2 = new ColorFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putInt("color", Color.YELLOW);
+        bundle.putString("text", "글자");
+
+        colorFragment2.setArguments(bundle);
+
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.container, colorFragment2)
                 .commit();

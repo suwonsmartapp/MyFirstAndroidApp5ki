@@ -26,7 +26,12 @@ public class ColorFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_color, container, false);
+
+        Bundle bundle = getArguments();
+        int color = bundle.getInt("color");
+        mColor = color;
         view.setBackgroundColor(mColor);
+
         return view;
     }
 
