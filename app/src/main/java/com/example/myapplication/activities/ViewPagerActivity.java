@@ -2,6 +2,7 @@ package com.example.myapplication.activities;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -14,16 +15,20 @@ import com.example.myapplication.fragments.ColorFragment;
 public class ViewPagerActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
+    private TabLayout mTabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_pager);
 
+        mTabLayout = (TabLayout) findViewById(R.id.tab);
         mViewPager = (ViewPager) findViewById(R.id.pager);
 
         MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(adapter);
+
+        mTabLayout.setupWithViewPager(mViewPager);
     }
 
     private static class MyPagerAdapter extends FragmentPagerAdapter {
@@ -52,6 +57,24 @@ public class ViewPagerActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             return 5;
+        }
+
+        // 제목 표시
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "빨강";
+                case 1:
+                    return "블루";
+                case 2:
+                    return "노랑";
+                case 3:
+                    return "약간 푸른계열";
+                case 4:
+                    return "보라";
+            }
+            return null;
         }
     }
 }
