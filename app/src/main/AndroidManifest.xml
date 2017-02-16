@@ -56,7 +56,8 @@
         <activity android:name=".activities.ImageFragmentActivity" />
         <activity android:name=".activities.ViewPagerActivity" />
         <activity android:name=".activities.ViewPagerExamActivity" />
-        <activity android:name=".activities.WeatherApiActivity"></activity>
+        <activity android:name=".activities.WeatherApiActivity" />
+        <activity android:name=".activities.GeoIpActivity"></activity>
     </application>
 
 </manifest>
