@@ -6,12 +6,13 @@ package com.example.myapplication.models;
 
 public class Weather {
     private int imageRes;
-    private String location;
+    private String weather;
+    private String country;
     private String temperature;
 
-    public Weather(int imageRes, String location, String temperature) {
+    public Weather(int imageRes, String country, String temperature) {
         this.imageRes = imageRes;
-        this.location = location;
+        this.country = country;
         this.temperature = temperature;
     }
 
@@ -23,12 +24,12 @@ public class Weather {
         this.imageRes = imageRes;
     }
 
-    public String getLocation() {
-        return location;
+    public String getCountry() {
+        return country;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public String getTemperature() {
@@ -39,11 +40,20 @@ public class Weather {
         this.temperature = temperature;
     }
 
+    public String getWeather() {
+        return weather;
+    }
+
+    public void setWeather(String weather) {
+        this.weather = weather;
+    }
+
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("Weather{");
-        sb.append("imageRes=").append(imageRes);
-        sb.append(", location='").append(location).append('\'');
+        sb.append("country='").append(country).append('\'');
+        sb.append(", imageRes=").append(imageRes);
+        sb.append(", weather='").append(weather).append('\'');
         sb.append(", temperature='").append(temperature).append('\'');
         sb.append('}');
         return sb.toString();

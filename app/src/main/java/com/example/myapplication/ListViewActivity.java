@@ -24,6 +24,7 @@ import com.example.myapplication.activities.MemoActivity;
 import com.example.myapplication.activities.ViewPagerActivity;
 import com.example.myapplication.activities.ViewPagerExamActivity;
 import com.example.myapplication.activities.WeatherActivity;
+import com.example.myapplication.activities.WeatherApiActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,6 +58,7 @@ public class ListViewActivity extends AppCompatActivity {
         addItem("프래그먼트 콜백 연습", "콜백", ImageFragmentActivity.class);
         addItem("ViewPager", "", ViewPagerActivity.class);
         addItem("ViewPager 연습문제", "TabLayout + ViewPager", ViewPagerExamActivity.class);
+        addItem("날씨앱 API버전", "API 사용 연습", WeatherApiActivity.class);
 
         // 어댑터
 //        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,

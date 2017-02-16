@@ -82,7 +82,7 @@ public class WeatherAdapter extends BaseAdapter {
 
         // 화면에 뿌리기
         viewHolder.weatherImage.setImageResource(weather.getImageRes());
-        viewHolder.locationTextView.setText(weather.getLocation());
+        viewHolder.locationTextView.setText(weather.getCountry());
         viewHolder.temperatureTextView.setText(weather.getTemperature());
 
         // 홀수 줄은 빨간 색
