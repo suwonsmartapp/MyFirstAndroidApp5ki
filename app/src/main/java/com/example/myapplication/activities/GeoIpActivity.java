@@ -42,8 +42,9 @@ public class GeoIpActivity extends AppCompatActivity implements View.OnClickList
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        LatLng sydney = new LatLng(37.274105, 127.02262100000007);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("수원스마트앱개발학원"));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(17));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 
@@ -87,6 +88,16 @@ public class GeoIpActivity extends AppCompatActivity implements View.OnClickList
 
                         if (geoIp != null) {
                             mResultTextView.setText(geoIp.toString());
+
+                            // 지도에 반영
+                            String city = geoIp.getCity();      // 도시 이름
+                            String lat = geoIp.getLatitude();   // 위도
+                            String lng = geoIp.getLongitude();  // 경도
+
+                            LatLng latLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+                            mMap.addMarker(new MarkerOptions().position(latLng).title(city));
+                            mMap.animateCamera(CameraUpdateFactory.zoomTo(17));
+                            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                         } else {
                             Toast.makeText(GeoIpActivity.this, "잘못된 입력입니다", Toast.LENGTH_SHORT).show();
                         }
