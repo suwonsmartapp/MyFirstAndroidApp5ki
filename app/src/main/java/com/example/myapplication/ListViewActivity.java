@@ -21,6 +21,7 @@ import com.example.myapplication.activities.ImageFragmentActivity;
 import com.example.myapplication.activities.LifeCycleActivity;
 import com.example.myapplication.activities.ListViewExamActivity;
 import com.example.myapplication.activities.MainActivity;
+import com.example.myapplication.activities.MapsActivity;
 import com.example.myapplication.activities.MemoActivity;
 import com.example.myapplication.activities.ViewPagerActivity;
 import com.example.myapplication.activities.ViewPagerExamActivity;
@@ -61,6 +62,7 @@ public class ListViewActivity extends AppCompatActivity {
         addItem("ViewPager 연습문제", "TabLayout + ViewPager", ViewPagerExamActivity.class);
         addItem("날씨앱 API버전", "API 사용 연습", WeatherApiActivity.class);
         addItem("FreeGeoIp", "API 사용 연습", GeoIpActivity.class);
+        addItem("GoogleMap 데모", "GoogleMap 데모", MapsActivity.class);
 
         // 어댑터
 //        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,

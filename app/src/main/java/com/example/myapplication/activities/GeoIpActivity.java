@@ -10,6 +10,12 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.models.GeoIp;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,7 +25,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
-public class GeoIpActivity extends AppCompatActivity implements View.OnClickListener {
+public class GeoIpActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback {
+
+    private GoogleMap mMap;
 
     private EditText mAddressEditText;
     private TextView mResultTextView;
@@ -28,6 +36,16 @@ public class GeoIpActivity extends AppCompatActivity implements View.OnClickList
     private FreeGeoIpService mService;
 
     private ProgressBar mProgressBar;
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        // Add a marker in Sydney and move the camera
+        LatLng sydney = new LatLng(-34, 151);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+    }
 
     interface FreeGeoIpService {
         @GET("json/{address}")
@@ -38,6 +56,10 @@ public class GeoIpActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_geo_ip);
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
         mRetrofit = new Retrofit.Builder()
                 .baseUrl("http://freegeoip.net/")
