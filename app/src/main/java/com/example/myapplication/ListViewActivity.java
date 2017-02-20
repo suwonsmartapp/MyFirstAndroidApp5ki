@@ -23,6 +23,7 @@ import com.example.myapplication.activities.ListViewExamActivity;
 import com.example.myapplication.activities.MainActivity;
 import com.example.myapplication.activities.MapsActivity;
 import com.example.myapplication.activities.MemoActivity;
+import com.example.myapplication.activities.NaverTranslateApiActivity;
 import com.example.myapplication.activities.ViewPagerActivity;
 import com.example.myapplication.activities.ViewPagerExamActivity;
 import com.example.myapplication.activities.WeatherActivity;
@@ -63,6 +64,7 @@ public class ListViewActivity extends AppCompatActivity {
         addItem("날씨앱 API버전", "API 사용 연습", WeatherApiActivity.class);
         addItem("FreeGeoIp", "API 사용 연습", GeoIpActivity.class);
         addItem("GoogleMap 데모", "GoogleMap 데모", MapsActivity.class);
+        addItem("네이버 기계번역 API 연습", "너무 힘들어", NaverTranslateApiActivity.class);
 
         // 어댑터
 //        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
