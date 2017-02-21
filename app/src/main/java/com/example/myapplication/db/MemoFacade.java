@@ -119,6 +119,7 @@ public class MemoFacade {
 
     /**
      * 메모 삭제
+     *
      * @param id 삭제할 메모 id
      * @return 삭제된 행의 수
      */
@@ -126,7 +127,7 @@ public class MemoFacade {
         // Define 'where' part of query.
         String selection = MemoContract.MemoEntry._ID + " = ?";
         // Specify arguments in placeholder order.
-        String[] selectionArgs = { String.valueOf(id) };
+        String[] selectionArgs = {String.valueOf(id)};
         // Issue SQL statement.
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         int deleted = db.delete(MemoContract.MemoEntry.TABLE_NAME,
@@ -138,5 +139,30 @@ public class MemoFacade {
 //                "_id=" + id,
 //                null);
         return deleted;
+    }
+
+    /**
+     * 메모 수정
+     *
+     * @param id       수정할 메모 id
+     * @param title    제목
+     * @param contents 내용
+     * @return 수정된 메모 수
+     */
+    public int update(long id, String title, String contents) {
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        // New value for one column
+        ContentValues values = new ContentValues();
+        values.put(MemoContract.MemoEntry.COLUMN_NAME_TITLE, title);
+        values.put(MemoContract.MemoEntry.COLUMN_NAME_CONTENTS, contents);
+
+        int count = db.update(
+                MemoContract.MemoEntry.TABLE_NAME,
+                values,
+                MemoContract.MemoEntry._ID + "=" + id,
+                null);
+
+        return count;
     }
 }

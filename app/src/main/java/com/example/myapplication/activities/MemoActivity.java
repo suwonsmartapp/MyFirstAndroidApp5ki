@@ -97,9 +97,9 @@ public class MemoActivity extends AppCompatActivity implements AdapterView.OnIte
             } else if (requestCode == REQUEST_CODE_UPDATE_MEMO) {
                 long id = data.getLongExtra("id", -1);
                 // 수정
-                Memo memo = mMemoList.get((int) id);
-                memo.setTitle(title);
-                memo.setContent(content);
+                if (mMemoFacade.update(id, title, content) > 0) {
+                    mMemoList = mMemoFacade.getMemoList();
+                }
             }
 //            mAdapter.notifyDataSetChanged();
             // TODO 위에꺼가 이상하게 안되니까 일단 아래 코드로 땜빵
