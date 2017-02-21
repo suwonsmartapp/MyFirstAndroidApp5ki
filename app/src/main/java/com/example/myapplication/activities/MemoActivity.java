@@ -185,7 +185,13 @@ public class MemoActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void deleteMemo(long id) {
-        mMemoList.remove((int) id);
-        mAdapter.notifyDataSetChanged();
+        int deleted = mMemoFacade.delete(id);
+        if (deleted != 0) {
+            mMemoList = mMemoFacade.getMemoList();
+//            mAdapter.notifyDataSetChanged();
+            // TODO 땜질
+            mAdapter = new MemoAdapter(mMemoList);
+            mMemoListView.setAdapter(mAdapter);
+        }
     }
 }

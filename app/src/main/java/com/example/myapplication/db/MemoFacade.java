@@ -102,7 +102,12 @@ public class MemoFacade {
                                 MemoContract.MemoEntry.COLUMN_NAME_CONTENTS
                         )
                 );
+                long id = c.getLong(
+                        c.getColumnIndexOrThrow(
+                                MemoContract.MemoEntry._ID
+                        ));
                 Memo memo = new Memo(title, content);
+                memo.setId(id);
                 memoArrayList.add(memo);
             }
 
@@ -110,5 +115,28 @@ public class MemoFacade {
             c.close();
         }
         return memoArrayList;
+    }
+
+    /**
+     * 메모 삭제
+     * @param id 삭제할 메모 id
+     * @return 삭제된 행의 수
+     */
+    public int delete(long id) {
+        // Define 'where' part of query.
+        String selection = MemoContract.MemoEntry._ID + " = ?";
+        // Specify arguments in placeholder order.
+        String[] selectionArgs = { String.valueOf(id) };
+        // Issue SQL statement.
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        int deleted = db.delete(MemoContract.MemoEntry.TABLE_NAME,
+                selection,
+                selectionArgs);
+
+        // 이 코드로만으로 위 코드를 대체할 수 있다
+//        int deleted = db.delete(MemoContract.MemoEntry.TABLE_NAME,
+//                "_id=" + id,
+//                null);
+        return deleted;
     }
 }
