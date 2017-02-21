@@ -1,10 +1,7 @@
 package com.example.myapplication.activities;
 
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -23,11 +20,9 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.adapters.MemoAdapter;
-import com.example.myapplication.db.MemoContract;
-import com.example.myapplication.db.MemoDbHelper;
+import com.example.myapplication.db.MemoFacade;
 import com.example.myapplication.models.Memo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MemoActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
@@ -40,15 +35,15 @@ public class MemoActivity extends AppCompatActivity implements AdapterView.OnIte
     private MemoAdapter mAdapter;
     private ListView mMemoListView;
 
-    private MemoDbHelper mDbHelper;
+    private MemoFacade mMemoFacade;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memo);
 
-        // DB 헬퍼
-        mDbHelper = new MemoDbHelper(this);
+        // 메모 퍼사드
+        mMemoFacade = new MemoFacade(this);
 
         mMemoListView = (ListView) findViewById(R.id.memo_list);
 
@@ -65,65 +60,7 @@ public class MemoActivity extends AppCompatActivity implements AdapterView.OnIte
         });
 
         // 데이터
-        mMemoList = new ArrayList<>();
-
-        // DB에서 읽어오기
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
-        // 이거랑 아래 코드랑 같다
-        Cursor cursor = db.rawQuery("SELECT * FROM memo", null);
-
-
-        // Define a projection that specifies which columns from the database
-        // you will actually use after this query.
-        String[] projection = {
-                MemoContract.MemoEntry._ID,
-                MemoContract.MemoEntry.COLUMN_NAME_TITLE,
-                MemoContract.MemoEntry.COLUMN_NAME_CONTENTS
-        };
-
-        // Filter results WHERE "title" = 'My Title'
-        String selection = MemoContract.MemoEntry.COLUMN_NAME_TITLE + " = ?";
-        String[] selectionArgs = { "My Title" };
-
-        // How you want the results sorted in the resulting Cursor
-        // ORDER BY _id DESC
-        String sortOrder =
-                MemoContract.MemoEntry._ID + " DESC";
-
-        Cursor c = db.query(
-                MemoContract.MemoEntry.TABLE_NAME,        // The table to query
-                null,                                     // The columns to return
-                null,                                // The columns for the WHERE clause
-                null,                            // The values for the WHERE clause
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                sortOrder                                 // The sort order
-        );
-
-        Log.d(TAG, "onCreate: " + c.toString());
-
-        if (c != null) {
-            // 커서를 Memo로 변환
-
-            // 커서를 처음 항목이로 이동
-//            c.moveToFirst();
-            while (c.moveToNext()) {
-                String title = c.getString(
-                        c.getColumnIndexOrThrow(
-                                MemoContract.MemoEntry.COLUMN_NAME_TITLE));
-                String content = c.getString(
-                        c.getColumnIndexOrThrow(
-                                MemoContract.MemoEntry.COLUMN_NAME_CONTENTS
-                        )
-                );
-                Memo memo = new Memo(title, content);
-                mMemoList.add(memo);
-            }
-
-            // 커서 닫기
-            c.close();
-        }
+        mMemoList = mMemoFacade.getMemoList();
 
         // 어댑터
         mAdapter = new MemoAdapter(mMemoList);
@@ -147,24 +84,14 @@ public class MemoActivity extends AppCompatActivity implements AdapterView.OnIte
 
             if (requestCode == REQUEST_CODE_NEW_MEMO) {
                 // 새 메모
-                mMemoList.add(new Memo(title, content));
-
-                // Gets the data repository in write mode
-                SQLiteDatabase db = mDbHelper.getWritableDatabase();
-
-                // Create a new map of values, where column names are the keys
-                ContentValues values = new ContentValues();
-                values.put(MemoContract.MemoEntry.COLUMN_NAME_TITLE, title);
-                values.put(MemoContract.MemoEntry.COLUMN_NAME_CONTENTS, content);
-
-                // Insert the new row, returning the primary key value of the new row
-                long newRowId = db.insert(MemoContract.MemoEntry.TABLE_NAME, null, values);
-
+                long newRowId = mMemoFacade.insert(title, content);
                 if (newRowId == -1) {
                     // 에러
                     Toast.makeText(this, "저장이 실패하였습니다", Toast.LENGTH_SHORT).show();
                 } else {
                     // 성공
+                    // 리스트 갱신
+                    mMemoList = mMemoFacade.getMemoList();
                 }
 
             } else if (requestCode == REQUEST_CODE_UPDATE_MEMO) {
@@ -174,7 +101,10 @@ public class MemoActivity extends AppCompatActivity implements AdapterView.OnIte
                 memo.setTitle(title);
                 memo.setContent(content);
             }
-            mAdapter.notifyDataSetChanged();
+//            mAdapter.notifyDataSetChanged();
+            // TODO 위에꺼가 이상하게 안되니까 일단 아래 코드로 땜빵
+            mAdapter = new MemoAdapter(mMemoList);
+            mMemoListView.setAdapter(mAdapter);
 
             Log.d(TAG, "onActivityResult: " + title + ", " + content);
             Toast.makeText(this, "저장 되었습니다", Toast.LENGTH_SHORT).show();
