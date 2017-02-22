@@ -16,6 +16,7 @@ import com.example.myapplication.activities.BankActivity;
 import com.example.myapplication.activities.BasketballActivity;
 import com.example.myapplication.activities.ColorFragmentActivity;
 import com.example.myapplication.activities.FragmentExam1Activity;
+import com.example.myapplication.activities.GalleryActivity;
 import com.example.myapplication.activities.GeoIpActivity;
 import com.example.myapplication.activities.ImageFragmentActivity;
 import com.example.myapplication.activities.LifeCycleActivity;
@@ -65,6 +66,7 @@ public class ListViewActivity extends AppCompatActivity {
         addItem("FreeGeoIp", "API 사용 연습", GeoIpActivity.class);
         addItem("GoogleMap 데모", "GoogleMap 데모", MapsActivity.class);
         addItem("네이버 기계번역 API 연습", "너무 힘들어", NaverTranslateApiActivity.class);
+        addItem("갤러리", "CursorAdaper, Provider", GalleryActivity.class);
 
         // 어댑터
 //        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
