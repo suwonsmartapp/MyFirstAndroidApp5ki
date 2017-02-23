@@ -25,6 +25,7 @@ import com.example.myapplication.activities.MainActivity;
 import com.example.myapplication.activities.MapsActivity;
 import com.example.myapplication.activities.MemoActivity;
 import com.example.myapplication.activities.NaverTranslateApiActivity;
+import com.example.myapplication.activities.ThreadActivity;
 import com.example.myapplication.activities.ViewPagerActivity;
 import com.example.myapplication.activities.ViewPagerExamActivity;
 import com.example.myapplication.activities.WeatherActivity;
@@ -67,6 +68,7 @@ public class ListViewActivity extends AppCompatActivity {
         addItem("GoogleMap 데모", "GoogleMap 데모", MapsActivity.class);
         addItem("네이버 기계번역 API 연습", "너무 힘들어", NaverTranslateApiActivity.class);
         addItem("갤러리", "CursorAdaper, Provider", GalleryActivity.class);
+        addItem("스레드", "Thread", ThreadActivity.class);
 
         // 어댑터
 //        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
