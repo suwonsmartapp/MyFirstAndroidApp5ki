@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.activities.AsyncTaskActivity;
 import com.example.myapplication.activities.BankActivity;
 import com.example.myapplication.activities.BasketballActivity;
 import com.example.myapplication.activities.ColorFragmentActivity;
@@ -32,6 +33,7 @@ import com.example.myapplication.activities.WeatherActivity;
 import com.example.myapplication.activities.WeatherApiActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,7 +70,10 @@ public class ListViewActivity extends AppCompatActivity {
         addItem("GoogleMap 데모", "GoogleMap 데모", MapsActivity.class);
         addItem("네이버 기계번역 API 연습", "너무 힘들어", NaverTranslateApiActivity.class);
         addItem("갤러리", "CursorAdaper, Provider", GalleryActivity.class);
-        addItem("스레드", "Thread", ThreadActivity.class);
+        addItem("스레드", "Thread, Handler", ThreadActivity.class);
+        addItem("스레드", "AsyncTask", AsyncTaskActivity.class);
+
+        Collections.reverse(mDataList);
 
         // 어댑터
 //        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
