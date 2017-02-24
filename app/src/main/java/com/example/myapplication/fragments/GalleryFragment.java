@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 
 public class GalleryFragment extends Fragment {
@@ -132,7 +133,8 @@ public class GalleryFragment extends Fragment {
             ViewHolder viewHolder = (ViewHolder) view.getTag();
 
             String path = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA));
-            viewHolder.imageView.setImageURI(Uri.parse(path));
+
+            Glide.with(context).load(path).into(viewHolder.imageView);
         }
 
     }
