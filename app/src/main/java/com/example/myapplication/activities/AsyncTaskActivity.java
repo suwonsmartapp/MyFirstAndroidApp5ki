@@ -1,10 +1,13 @@
 package com.example.myapplication.activities;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.WorkerThread;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
@@ -30,15 +33,106 @@ public class AsyncTaskActivity extends AppCompatActivity {
         task.execute(0);
         task.cancel(true);
 
-        // 일반적인 사용법
-        // 순차적으로 실행
-        new MyAsyncTask().execute(0);
-        new MyAsyncTask().execute(0);
-        new MyAsyncTask().execute(0);
+//        // 일반적인 사용법
+//        // 순차적으로 실행
+//        new MyAsyncTask().execute(0);
+//        new MyAsyncTask().execute(0);
+//        new MyAsyncTask().execute(0);
+//
+//        // 병렬로 수행되는 AsyncTask
+//        new MyAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, 0);
+//        new MyAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, 0);
 
-        // 병렬로 수행되는 AsyncTask
-        new MyAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, 0);
-        new MyAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, 0);
+
+    }
+
+    public void progressClick(View view) {
+        new ProgressTask(this).execute();
+    }
+
+    public void downloadClick(View view) {
+        new DownloadTask(this).execute();
+    }
+
+    private class DownloadTask extends AsyncTask<Void, Integer, Void> {
+        private final Context mContext;
+        private ProgressDialog mDialog;
+
+        public DownloadTask(Context context) {
+            mContext = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            // 다이얼로그 보이기
+            mDialog = new ProgressDialog(mContext);
+            mDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            mDialog.setMessage("처리 중 입니다 ...");
+            mDialog.create();
+            mDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                for (int i = 0; i <= 100; i++) {
+                    Thread.sleep(100);
+
+                    // UI 갱신
+                    publishProgress(i);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            mDialog.setProgress(values[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            // 다이얼로그 숨기기
+            if (mDialog != null) {
+                mDialog.dismiss();
+            }
+        }
+    }
+
+    private class ProgressTask extends AsyncTask<Void, Void, Void> {
+        private final Context mContext;
+        private ProgressDialog mDialog;
+
+        public ProgressTask(Context context) {
+            mContext = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            // 다이얼로그 보이기
+            mDialog = new ProgressDialog(mContext);
+            mDialog.setMessage("처리 중 입니다 ...");
+            mDialog.create();
+            mDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            // 다이얼로그 숨기기
+            mDialog.dismiss();
+        }
     }
 
     private class MyAsyncTask extends AsyncTask<Integer, Integer, Integer> {
@@ -75,6 +169,7 @@ public class AsyncTaskActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Integer integer) {
+            // 오래걸리는 처리가 끝난 후 호출
             Log.d("AsyncTask", "onPostExecute: " + integer);
         }
 
