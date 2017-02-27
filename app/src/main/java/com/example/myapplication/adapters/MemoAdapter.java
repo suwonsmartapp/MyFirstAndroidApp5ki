@@ -15,12 +15,16 @@ import java.util.List;
  * Created by junsuk on 2017. 2. 7..
  */
 public class MemoAdapter extends BaseAdapter {
-    private final List<Memo> mData;
+    private List<Memo> mData;
 
     public MemoAdapter(List<Memo> memoList) {
         mData = memoList;
     }
 
+    public void swap(List<Memo> newMemoList) {
+        mData = newMemoList;
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getCount() {

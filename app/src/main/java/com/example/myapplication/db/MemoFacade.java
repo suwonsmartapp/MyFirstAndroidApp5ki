@@ -46,46 +46,37 @@ public class MemoFacade {
         return newRowId;
     }
 
+
     /**
-     * 전체 메모 리스트
+     * 메모 리스트
      *
-     * @return 전체 메모
+     * @param selection     조건절
+     * @param selectionArgs 조건절에 매핑할 인자들
+     * @param groupBy       Group by
+     * @param having        having
+     * @param orderBy       order by
+     * @return 조건에 맞는 메모 리스트를 반환
      */
-    public List<Memo> getMemoList() {
+    public List<Memo> getMemoList(String selection,
+                                  String[] selectionArgs,
+                                  String groupBy,
+                                  String having,
+                                  String orderBy) {
         ArrayList<Memo> memoArrayList = new ArrayList<>();
 
         // DB에서 읽어오기
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
-        // 이거랑 아래 코드랑 같다
-//        Cursor cursor = db.rawQuery("SELECT * FROM memo", null);
-
-
-        // Define a projection that specifies which columns from the database
-        // you will actually use after this query.
-        String[] projection = {
-                MemoContract.MemoEntry._ID,
-                MemoContract.MemoEntry.COLUMN_NAME_TITLE,
-                MemoContract.MemoEntry.COLUMN_NAME_CONTENTS
-        };
-
-        // Filter results WHERE "title" = 'My Title'
-        String selection = MemoContract.MemoEntry.COLUMN_NAME_TITLE + " = ?";
-        String[] selectionArgs = {"My Title"};
-
-        // How you want the results sorted in the resulting Cursor
-        // ORDER BY _id DESC
-        String sortOrder =
-                MemoContract.MemoEntry._ID + " DESC";
+        String order = MemoContract.MemoEntry._ID + " DESC";
 
         Cursor c = db.query(
                 MemoContract.MemoEntry.TABLE_NAME,        // The table to query
                 null,                                     // The columns to return
-                null,                                // The columns for the WHERE clause
-                null,                            // The values for the WHERE clause
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                sortOrder                                 // The sort order
+                selection,                                // The columns for the WHERE clause
+                selectionArgs,                            // The values for the WHERE clause
+                groupBy,                                     // don't group the rows
+                having,                                     // don't filter by row groups
+                orderBy == null ? order : orderBy                                 // The sort order
         );
 
         if (c != null) {
@@ -115,6 +106,15 @@ public class MemoFacade {
             c.close();
         }
         return memoArrayList;
+    }
+
+    /**
+     * 전체 메모 리스트
+     *
+     * @return 전체 메모
+     */
+    public List<Memo> getMemoList() {
+        return getMemoList(null, null, null, null, null);
     }
 
     /**

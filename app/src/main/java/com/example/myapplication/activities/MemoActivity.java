@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.adapters.MemoAdapter;
+import com.example.myapplication.db.MemoContract;
 import com.example.myapplication.db.MemoFacade;
 import com.example.myapplication.models.Memo;
 
@@ -41,6 +43,30 @@ public class MemoActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memo);
+
+        SearchView searchView = (SearchView) findViewById(R.id.search_view);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // 새로운 쿼리의 결과 뿌리기
+                List<Memo> newMemoList = mMemoFacade.getMemoList(
+                        MemoContract.MemoEntry.COLUMN_NAME_TITLE + " LIKE '%" + newText + "%'",
+                        null,
+                        null,
+                        null,
+                        null
+                );
+                mAdapter.swap(newMemoList);
+
+                return true;
+            }
+        });
+
 
         // 메모 퍼사드
         mMemoFacade = new MemoFacade(this);
@@ -101,10 +127,8 @@ public class MemoActivity extends AppCompatActivity implements AdapterView.OnIte
                     mMemoList = mMemoFacade.getMemoList();
                 }
             }
-//            mAdapter.notifyDataSetChanged();
-            // TODO 위에꺼가 이상하게 안되니까 일단 아래 코드로 땜빵
-            mAdapter = new MemoAdapter(mMemoList);
-            mMemoListView.setAdapter(mAdapter);
+
+            mAdapter.swap(mMemoList);
 
             Log.d(TAG, "onActivityResult: " + title + ", " + content);
             Toast.makeText(this, "저장 되었습니다", Toast.LENGTH_SHORT).show();
@@ -188,10 +212,7 @@ public class MemoActivity extends AppCompatActivity implements AdapterView.OnIte
         int deleted = mMemoFacade.delete(id);
         if (deleted != 0) {
             mMemoList = mMemoFacade.getMemoList();
-//            mAdapter.notifyDataSetChanged();
-            // TODO 땜질
-            mAdapter = new MemoAdapter(mMemoList);
-            mMemoListView.setAdapter(mAdapter);
+            mAdapter.swap(mMemoList);
         }
     }
 }

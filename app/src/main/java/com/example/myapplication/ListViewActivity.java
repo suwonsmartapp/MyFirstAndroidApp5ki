@@ -27,6 +27,7 @@ import com.example.myapplication.activities.MapsActivity;
 import com.example.myapplication.activities.MemoActivity;
 import com.example.myapplication.activities.NaverTranslateApiActivity;
 import com.example.myapplication.activities.ThreadActivity;
+import com.example.myapplication.activities.TwoWayViewActivity;
 import com.example.myapplication.activities.ViewPagerActivity;
 import com.example.myapplication.activities.ViewPagerExamActivity;
 import com.example.myapplication.activities.WeatherActivity;
@@ -72,6 +73,7 @@ public class ListViewActivity extends AppCompatActivity {
         addItem("갤러리", "CursorAdaper, Provider", GalleryActivity.class);
         addItem("스레드", "Thread, Handler", ThreadActivity.class);
         addItem("스레드", "AsyncTask", AsyncTaskActivity.class);
+        addItem("RecyclerView", "RecyclerView", TwoWayViewActivity.class);
 
         Collections.reverse(mDataList);
 

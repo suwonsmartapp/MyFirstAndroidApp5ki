@@ -84,7 +84,8 @@
         <activity android:name=".activities.NaverTranslateApiActivity" />
         <activity android:name=".activities.GalleryActivity" />
         <activity android:name=".activities.ThreadActivity" />
-        <activity android:name=".activities.AsyncTaskActivity"></activity>
+        <activity android:name=".activities.AsyncTaskActivity" />
+        <activity android:name=".activities.TwoWayViewActivity"></activity>
     </application>
 
 </manifest>
