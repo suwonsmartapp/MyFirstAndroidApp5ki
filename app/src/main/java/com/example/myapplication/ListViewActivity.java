@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.myapplication.activities.AsyncTaskActivity;
 import com.example.myapplication.activities.BankActivity;
 import com.example.myapplication.activities.BasketballActivity;
+import com.example.myapplication.activities.ChatActivity;
 import com.example.myapplication.activities.ColorFragmentActivity;
 import com.example.myapplication.activities.FragmentExam1Activity;
 import com.example.myapplication.activities.GalleryActivity;
@@ -74,6 +75,7 @@ public class ListViewActivity extends AppCompatActivity {
         addItem("스레드", "Thread, Handler", ThreadActivity.class);
         addItem("스레드", "AsyncTask", AsyncTaskActivity.class);
         addItem("RecyclerView", "RecyclerView", TwoWayViewActivity.class);
+        addItem("네트워크 채팅", "멀티 Thread", ChatActivity.class);
 
         Collections.reverse(mDataList);
 
