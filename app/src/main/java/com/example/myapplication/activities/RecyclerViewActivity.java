@@ -49,7 +49,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
         public ViewHolder(View itemView) {
             super(itemView);
 
-            textView = (TextView) itemView.findViewById(android.R.id.text1);
+            textView = (TextView) itemView.findViewById(R.id.text_text);
         }
     }
 
@@ -74,7 +74,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View convertView = LayoutInflater.from(parent.getContext())
-                    .inflate(android.R.layout.simple_list_item_1, parent, false);
+                    .inflate(R.layout.item_text, parent, false);
             return new ViewHolder(convertView);
         }
 
