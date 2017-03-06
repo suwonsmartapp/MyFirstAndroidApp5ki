@@ -71,6 +71,8 @@ public class Memo2Activity extends AppCompatActivity {
         intent.putExtra("title", mTitleEditText.getText().toString());
         intent.putExtra("content", mContentEditText.getText().toString());
         intent.putExtra("id", mId);
+        int position = getIntent().getIntExtra("position", -1);
+        intent.putExtra("position", position);
         setResult(RESULT_OK, intent);
         finish();
     }

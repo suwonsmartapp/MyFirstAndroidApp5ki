@@ -72,6 +72,16 @@ public class MemoRecyclerAdapter extends RecyclerView.Adapter<MemoRecyclerAdapte
         notifyDataSetChanged();
     }
 
+    public void insert(List<Memo> memoList) {
+        mData = memoList;
+        notifyItemInserted(0);
+    }
+
+    public void update(List<Memo> memoList, int position) {
+        mData = memoList;
+        notifyItemChanged(position);
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView titleTextView;

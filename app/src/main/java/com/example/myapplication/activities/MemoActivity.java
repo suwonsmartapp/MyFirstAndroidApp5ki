@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -76,6 +77,12 @@ public class MemoActivity extends AppCompatActivity {
 
         mMemoListView = (RecyclerView) findViewById(R.id.memo_list);
 
+        // 애니메이션 커스터마이징
+        RecyclerView.ItemAnimator animator = new DefaultItemAnimator();
+        animator.setChangeDuration(1000);
+        mMemoListView.setItemAnimator(animator);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -131,16 +138,18 @@ public class MemoActivity extends AppCompatActivity {
                     // 리스트 갱신
                     mMemoList = mMemoFacade.getMemoList();
                 }
+                mAdapter.insert(mMemoList);
 
             } else if (requestCode == REQUEST_CODE_UPDATE_MEMO) {
                 long id = data.getLongExtra("id", -1);
+                int position = data.getIntExtra("position", -1);
                 // 수정
                 if (mMemoFacade.update(id, title, content) > 0) {
                     mMemoList = mMemoFacade.getMemoList();
                 }
+                mAdapter.update(mMemoList, position);
             }
 
-            mAdapter.swap(mMemoList);
 
             Log.d(TAG, "onActivityResult: " + title + ", " + content);
             Toast.makeText(this, "저장 되었습니다", Toast.LENGTH_SHORT).show();
@@ -157,6 +166,7 @@ public class MemoActivity extends AppCompatActivity {
         Intent intent = new Intent(this, Memo2Activity.class);
         intent.putExtra("id", event.id);
         intent.putExtra("memo", memo);
+        intent.putExtra("position", event.position);
 
         startActivityForResult(intent, REQUEST_CODE_UPDATE_MEMO);
     }
