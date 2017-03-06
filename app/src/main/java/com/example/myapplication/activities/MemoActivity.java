@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -16,26 +17,28 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
-import com.example.myapplication.adapters.MemoAdapter;
+import com.example.myapplication.adapters.MemoRecyclerAdapter;
 import com.example.myapplication.db.MemoContract;
 import com.example.myapplication.db.MemoFacade;
 import com.example.myapplication.models.Memo;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.List;
 
-public class MemoActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class MemoActivity extends AppCompatActivity {
 
     private static final String TAG = MemoActivity.class.getSimpleName();
     public static final int REQUEST_CODE_NEW_MEMO = 1000;
     public static final int REQUEST_CODE_UPDATE_MEMO = 1001;
 
     private List<Memo> mMemoList;
-    private MemoAdapter mAdapter;
-    private ListView mMemoListView;
+    private MemoRecyclerAdapter mAdapter;
+    private RecyclerView mMemoListView;
 
     private MemoFacade mMemoFacade;
 
@@ -71,7 +74,7 @@ public class MemoActivity extends AppCompatActivity implements AdapterView.OnIte
         // 메모 퍼사드
         mMemoFacade = new MemoFacade(this);
 
-        mMemoListView = (ListView) findViewById(R.id.memo_list);
+        mMemoListView = (RecyclerView) findViewById(R.id.memo_list);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -89,15 +92,24 @@ public class MemoActivity extends AppCompatActivity implements AdapterView.OnIte
         mMemoList = mMemoFacade.getMemoList();
 
         // 어댑터
-        mAdapter = new MemoAdapter(mMemoList);
+        mAdapter = new MemoRecyclerAdapter(mMemoList);
 
         mMemoListView.setAdapter(mAdapter);
 
-        // 이벤트
-        mMemoListView.setOnItemClickListener(this);
-
         // ContextMenu
         registerForContextMenu(mMemoListView);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -137,12 +149,13 @@ public class MemoActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Memo memo = mMemoList.get(position);
+    // 보낸이 : MemoRecyclerAdapter
+    @Subscribe
+    public void onItemClick(MemoRecyclerAdapter.ItemClickEvent event) {
+        Memo memo = mMemoList.get(event.position);
 
         Intent intent = new Intent(this, Memo2Activity.class);
-        intent.putExtra("id", id);
+        intent.putExtra("id", event.id);
         intent.putExtra("memo", memo);
 
         startActivityForResult(intent, REQUEST_CODE_UPDATE_MEMO);

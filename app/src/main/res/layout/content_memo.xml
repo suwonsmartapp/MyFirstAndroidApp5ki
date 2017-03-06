@@ -13,9 +13,11 @@
     tools:context="com.example.myapplication.activities.MemoActivity"
     tools:showIn="@layout/activity_memo">
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/memo_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:layoutManager="android.support.v7.widget.StaggeredGridLayoutManager"
+        app:spanCount="2" />
 
 </RelativeLayout>

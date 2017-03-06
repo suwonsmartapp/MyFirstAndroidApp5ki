@@ -87,7 +87,8 @@
         <activity android:name=".activities.AsyncTaskActivity" />
         <activity android:name=".activities.TwoWayViewActivity" />
         <activity android:name=".activities.ChatActivity" />
-        <activity android:name=".activities.RecyclerViewActivity"></activity>
+        <activity android:name=".activities.RecyclerViewActivity" />
+        <activity android:name=".activities.ConstraintLayoutActivity"></activity>
     </application>
 
 </manifest>
