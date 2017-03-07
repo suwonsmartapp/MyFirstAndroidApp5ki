@@ -13,6 +13,8 @@ public class MyLocalReceiver extends BroadcastReceiver {
             Toast.makeText(context, "로컬 브로드캐스트 리시버다!!!", Toast.LENGTH_LONG).show();
         } else if (intent.getAction().equals(Intent.ACTION_POWER_DISCONNECTED)) {
             Toast.makeText(context, "전원이 뽑혔습니다", Toast.LENGTH_SHORT).show();
+        } else if (intent.getAction().equals("com.example.myapplication.broadcast.ACTION_TEST")) {
+            Toast.makeText(context, "나만의 액션 받기 성공!!", Toast.LENGTH_SHORT).show();
         }
     }
 }

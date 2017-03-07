@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.example.myapplication.R;
 import com.example.myapplication.receiver.MyLocalReceiver;
@@ -33,6 +34,7 @@ public class BroadcastReceiverActivity extends AppCompatActivity {
         IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_BATTERY_LOW);
         filter.addAction(Intent.ACTION_POWER_DISCONNECTED);
+        filter.addAction("com.example.myapplication.broadcast.ACTION_TEST");
 
         // 리시버 등록
         registerReceiver(mReceiver, filter);
@@ -44,5 +46,15 @@ public class BroadcastReceiverActivity extends AppCompatActivity {
 
         // 리시버 해제
         unregisterReceiver(mReceiver);
+    }
+
+    public void onClick(View view) {
+        // 나만의 액션을 쏘기
+        Intent intent = new Intent("com.example.myapplication.broadcast.ACTION_TEST");
+        // 순서없는
+        sendBroadcast(intent);
+
+        // 순서있는
+//        sendOrderedBroadcast()
     }
 }
