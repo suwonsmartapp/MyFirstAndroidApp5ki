@@ -61,6 +61,10 @@ public class MyLocalReceiver extends BroadcastReceiver {
         // 진동
         builder.setVibrate(new long[]{100, 200, 300});
 
+        // 액션
+        builder.addAction(R.mipmap.ic_launcher, "확인", pendingIntent);
+        builder.addAction(R.mipmap.ic_launcher, "취소", pendingIntent);
+
         // 알림 표시
         NotificationManagerCompat manager = NotificationManagerCompat.from(context);
         manager.notify(0, builder.build());
