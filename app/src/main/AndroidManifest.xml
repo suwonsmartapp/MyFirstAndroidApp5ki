@@ -66,6 +66,7 @@
         <activity android:name=".activities.ViewPagerExamActivity" />
         <activity android:name=".activities.WeatherApiActivity" />
         <activity android:name=".activities.GeoIpActivity" />
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -88,7 +89,17 @@
         <activity android:name=".activities.TwoWayViewActivity" />
         <activity android:name=".activities.ChatActivity" />
         <activity android:name=".activities.RecyclerViewActivity" />
-        <activity android:name=".activities.ConstraintLayoutActivity"></activity>
+        <activity android:name=".activities.ConstraintLayoutActivity" />
+        <activity android:name=".activities.BroadcastReceiverActivity" />
+
+        <receiver
+            android:name=".receiver.MyReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BATTERY_LOW" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
