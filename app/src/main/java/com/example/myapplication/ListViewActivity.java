@@ -29,6 +29,7 @@ import com.example.myapplication.activities.MapsActivity;
 import com.example.myapplication.activities.MemoActivity;
 import com.example.myapplication.activities.NaverTranslateApiActivity;
 import com.example.myapplication.activities.RecyclerViewActivity;
+import com.example.myapplication.activities.ScrollingActivity;
 import com.example.myapplication.activities.ThreadActivity;
 import com.example.myapplication.activities.ViewPagerActivity;
 import com.example.myapplication.activities.ViewPagerExamActivity;
@@ -78,6 +79,7 @@ public class ListViewActivity extends AppCompatActivity {
         addItem("네트워크 채팅", "멀티 Thread", ChatActivity.class);
         addItem("RecyclerView", "RecyclerView", RecyclerViewActivity.class);
         addItem("BroadcastReceiver", "로컬 브로드캐스트", BroadcastReceiverActivity.class);
+        addItem("스크롤 테크닉", "CoordinatorLayout", ScrollingActivity.class);
 
         Collections.reverse(mDataList);
 
