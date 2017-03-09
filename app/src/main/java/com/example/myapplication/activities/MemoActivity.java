@@ -126,10 +126,12 @@ public class MemoActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             String title = data.getStringExtra("title");
             String content = data.getStringExtra("content");
+            String imageUri = data.getStringExtra("image");
+
 
             if (requestCode == REQUEST_CODE_NEW_MEMO) {
                 // 새 메모
-                long newRowId = mMemoFacade.insert(title, content);
+                long newRowId = mMemoFacade.insert(title, content, imageUri);
                 if (newRowId == -1) {
                     // 에러
                     Toast.makeText(this, "저장이 실패하였습니다", Toast.LENGTH_SHORT).show();
@@ -144,7 +146,7 @@ public class MemoActivity extends AppCompatActivity {
                 long id = data.getLongExtra("id", -1);
                 int position = data.getIntExtra("position", -1);
                 // 수정
-                if (mMemoFacade.update(id, title, content) > 0) {
+                if (mMemoFacade.update(id, title, content, imageUri) > 0) {
                     mMemoList = mMemoFacade.getMemoList();
                 }
                 mAdapter.update(mMemoList, position);
@@ -167,6 +169,7 @@ public class MemoActivity extends AppCompatActivity {
         intent.putExtra("id", event.id);
         intent.putExtra("memo", memo);
         intent.putExtra("position", event.position);
+        intent.putExtra("image", memo.getImageUri());
 
         startActivityForResult(intent, REQUEST_CODE_UPDATE_MEMO);
     }

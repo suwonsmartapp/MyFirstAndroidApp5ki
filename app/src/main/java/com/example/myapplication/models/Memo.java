@@ -10,6 +10,7 @@ public class Memo implements Serializable {
     private long id;
     private String title;
     private String content;
+    private String imageUri;
 
     public Memo(String title, String content) {
         this.title = title;
@@ -38,6 +39,14 @@ public class Memo implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getImageUri() {
+        return imageUri;
+    }
+
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
     }
 
     @Override

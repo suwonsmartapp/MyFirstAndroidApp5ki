@@ -22,6 +22,8 @@ public class Memo2Activity extends AppCompatActivity {
     private EditText mContentEditText;
     private ImageView mImageView;
 
+    private String mImageUri;
+
     private long mId = -1;
 
     @Override
@@ -44,6 +46,10 @@ public class Memo2Activity extends AppCompatActivity {
                 // 보여주기
 
                 mId = getIntent().getLongExtra("id", -1);
+                mImageUri = getIntent().getStringExtra("image");
+                if (mImageUri != null) {
+                    Glide.with(this).loadFromMediaStore(Uri.parse(mImageUri)).into(mImageView);
+                }
 
                 Memo memo = (Memo) getIntent().getSerializableExtra("memo");
                 mTitleEditText.setText(memo.getTitle());
@@ -84,6 +90,7 @@ public class Memo2Activity extends AppCompatActivity {
         intent.putExtra("title", mTitleEditText.getText().toString());
         intent.putExtra("content", mContentEditText.getText().toString());
         intent.putExtra("id", mId);
+        intent.putExtra("image", mImageUri);
         int position = getIntent().getIntExtra("position", -1);
         intent.putExtra("position", position);
         setResult(RESULT_OK, intent);
@@ -107,6 +114,9 @@ public class Memo2Activity extends AppCompatActivity {
 
             // 사진 경로
             Uri uri = data.getData();
+
+            mImageUri = uri.toString();
+
             // 라이브러리
             Glide.with(this).loadFromMediaStore(uri).into(mImageView);
 

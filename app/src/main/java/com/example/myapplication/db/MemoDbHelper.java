@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 
 public class MemoDbHelper extends SQLiteOpenHelper {
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "memo.db";
 
     public MemoDbHelper(Context context) {
@@ -26,5 +26,8 @@ public class MemoDbHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // 업그레이드 처리
+        if (oldVersion < newVersion) {
+            db.execSQL("ALTER TABLE " + MemoContract.MemoEntry.TABLE_NAME + " ADD " + MemoContract.MemoEntry.COLUMN_NAME_IMAGE + " TEXT");
+        }
     }
 }
