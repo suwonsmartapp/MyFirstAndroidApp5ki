@@ -10,7 +10,7 @@ public class Memo implements Serializable {
     private long id;
     private String title;
     private String content;
-    private String imageUri;
+    private String imagePath;
 
     public Memo(String title, String content) {
         this.title = title;
@@ -41,19 +41,21 @@ public class Memo implements Serializable {
         this.id = id;
     }
 
-    public String getImageUri() {
-        return imageUri;
+    public String getImagePath() {
+        return imagePath;
     }
 
-    public void setImageUri(String imageUri) {
-        this.imageUri = imageUri;
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("Memo{");
-        sb.append("content='").append(content).append('\'');
+        sb.append("id=").append(id);
         sb.append(", title='").append(title).append('\'');
+        sb.append(", content='").append(content).append('\'');
+        sb.append(", imagePath='").append(imagePath).append('\'');
         sb.append('}');
         return sb.toString();
     }

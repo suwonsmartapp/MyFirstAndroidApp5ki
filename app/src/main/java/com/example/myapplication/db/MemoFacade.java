@@ -29,7 +29,7 @@ public class MemoFacade {
      * @param contents 내용
      * @return 추가된 row 의 id, 만약 에러가 발생되면 -1
      */
-    public long insert(String title, String contents, String imageUri) {
+    public long insert(String title, String contents, String imagePath) {
         // Gets the data repository in write mode
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
@@ -40,8 +40,8 @@ public class MemoFacade {
         ContentValues values = new ContentValues();
         values.put(MemoContract.MemoEntry.COLUMN_NAME_TITLE, title);
         values.put(MemoContract.MemoEntry.COLUMN_NAME_CONTENTS, contents);
-        if (imageUri != null) {
-            values.put(MemoContract.MemoEntry.COLUMN_NAME_IMAGE, imageUri);
+        if (imagePath != null) {
+            values.put(MemoContract.MemoEntry.COLUMN_NAME_IMAGE, imagePath);
         }
 
         // Insert the new row, returning the primary key value of the new row
@@ -108,7 +108,7 @@ public class MemoFacade {
 
                 Memo memo = new Memo(title, content);
                 memo.setId(id);
-                memo.setImageUri(imageUri);
+                memo.setImagePath(imageUri);
                 memoArrayList.add(memo);
             }
 
