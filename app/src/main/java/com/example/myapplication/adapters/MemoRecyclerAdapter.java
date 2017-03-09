@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 import com.example.myapplication.models.Memo;
 
@@ -68,9 +69,7 @@ public class MemoRecyclerAdapter extends RecyclerView.Adapter<MemoRecyclerAdapte
         holder.contentTextView.setText(memo.getContent());
 
         if (memo.getImagePath() != null) {
-
-//            String path = getRealPathFromURI(mContext, Uri.parse(memo.getImagePath()));
-//            Glide.with(mContext).load(path).into(holder.imageView);
+            Glide.with(mContext).load(memo.getImagePath()).into(holder.imageView);
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

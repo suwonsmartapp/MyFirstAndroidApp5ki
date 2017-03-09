@@ -1,8 +1,11 @@
 package com.example.myapplication.activities;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -115,7 +118,7 @@ public class Memo2Activity extends AppCompatActivity {
             // 사진 경로
             Uri uri = data.getData();
 
-            mImagePath = uri.toString();
+            mImagePath = getRealPath(uri);
 
             // 라이브러리
             Glide.with(this).load(mImagePath).into(mImageView);
@@ -129,5 +132,23 @@ public class Memo2Activity extends AppCompatActivity {
 //            mImageView.setImageBitmap(bitmap);
         }
 
+    }
+
+    public String getRealPath(Uri uri) {
+        String strDocId = DocumentsContract.getDocumentId(uri);
+        String[] strSplittedDocId = strDocId.split(":");
+        String strId = strSplittedDocId[strSplittedDocId.length - 1];
+
+        Cursor crsCursor = getContentResolver().query(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI ,
+                new String[] {MediaStore.MediaColumns.DATA} ,
+                "_id=?",
+                new String []{strId},
+                null
+        );
+        crsCursor.moveToFirst();
+        String filePath = crsCursor.getString(0);
+
+        return filePath;
     }
 }
