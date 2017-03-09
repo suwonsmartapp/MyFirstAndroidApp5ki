@@ -52,7 +52,9 @@
             android:name=".activities.MemoActivity"
             android:label="@string/title_activity_memo"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.Memo2Activity" />
+        <activity
+            android:name=".activities.Memo2Activity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.BankActivity" />
         <activity android:name=".activities.OpenAccountActivity" />
         <activity android:name=".activities.AccountCheckActivity" />
