@@ -2,8 +2,11 @@ package com.example.myapplication.services;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
+
+import java.util.Random;
 
 public class MyService extends Service {
     public static final String TAG = MyService.class.getSimpleName();
@@ -31,7 +34,18 @@ public class MyService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
-        throw new UnsupportedOperationException("Not yet implemented");
+        return mBinder;
+    }
+
+    private final IBinder mBinder = new MyBinder();
+
+    public class MyBinder extends Binder {
+        public MyService getService() {
+            return MyService.this;
+        }
+    }
+
+    public long getTime() {
+        return new Random().nextLong();
     }
 }
