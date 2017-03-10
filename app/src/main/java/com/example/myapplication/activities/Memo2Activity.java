@@ -1,11 +1,8 @@
 package com.example.myapplication.activities;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.DocumentsContract;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -18,6 +15,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 import com.example.myapplication.models.Memo;
+import com.example.myapplication.utils.MyUtils;
 
 public class Memo2Activity extends AppCompatActivity {
 
@@ -118,7 +116,7 @@ public class Memo2Activity extends AppCompatActivity {
             // 사진 경로
             Uri uri = data.getData();
 
-            mImagePath = getRealPath(uri);
+            mImagePath = MyUtils.getRealPath(this, uri);
 
             // 라이브러리
             Glide.with(this).load(mImagePath).into(mImageView);
@@ -134,21 +132,5 @@ public class Memo2Activity extends AppCompatActivity {
 
     }
 
-    public String getRealPath(Uri uri) {
-        String strDocId = DocumentsContract.getDocumentId(uri);
-        String[] strSplittedDocId = strDocId.split(":");
-        String strId = strSplittedDocId[strSplittedDocId.length - 1];
 
-        Cursor crsCursor = getContentResolver().query(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI ,
-                new String[] {MediaStore.MediaColumns.DATA} ,
-                "_id=?",
-                new String []{strId},
-                null
-        );
-        crsCursor.moveToFirst();
-        String filePath = crsCursor.getString(0);
-
-        return filePath;
-    }
 }
