@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.example.myapplication.R;
 import com.example.myapplication.services.MyIntentService;
+import com.example.myapplication.services.MyService;
 
 public class ServiceActivity extends AppCompatActivity {
 
@@ -22,6 +23,13 @@ public class ServiceActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MyIntentService.class);
         intent.setAction("play");
         intent.putExtra("path", "file://dfadsf");
+        startService(intent);
+    }
+
+    public void onStartService(View view) {
+        // 1. Main스레드에서 돈다. 그래서 Thread를 별도 생성해서 실행해야 한다
+        // 2. 병렬 실행 가능
+        Intent intent = new Intent(this, MyService.class);
         startService(intent);
     }
 }
