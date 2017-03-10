@@ -108,7 +108,11 @@
             android:name=".activities.ScrollingActivity"
             android:label="@string/title_activity_scrolling"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.MusicPlayerActivity"></activity>
+        <activity android:name=".activities.MusicPlayerActivity" />
+        <activity
+            android:name=".activities.NavigationDrawerActivity"
+            android:label="@string/title_activity_navigation_drawer"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

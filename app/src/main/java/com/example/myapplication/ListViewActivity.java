@@ -29,6 +29,7 @@ import com.example.myapplication.activities.MapsActivity;
 import com.example.myapplication.activities.MemoActivity;
 import com.example.myapplication.activities.MusicPlayerActivity;
 import com.example.myapplication.activities.NaverTranslateApiActivity;
+import com.example.myapplication.activities.NavigationDrawerActivity;
 import com.example.myapplication.activities.RecyclerViewActivity;
 import com.example.myapplication.activities.ScrollingActivity;
 import com.example.myapplication.activities.ThreadActivity;
@@ -82,6 +83,7 @@ public class ListViewActivity extends AppCompatActivity {
         addItem("BroadcastReceiver", "로컬 브로드캐스트", BroadcastReceiverActivity.class);
         addItem("스크롤 테크닉", "CoordinatorLayout", ScrollingActivity.class);
         addItem("뮤직 플레이어", "아주대 218쪽", MusicPlayerActivity.class);
+        addItem("NavigationDrawer", "기본 템플릿", NavigationDrawerActivity.class);
 
         Collections.reverse(mDataList);
 
