@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">5기 예제</string>
     <string name="hello">안녕하세요</string>
     <string name="title_activity_implicit">ImplicitActivity</string>
     <string name="title_activity_memo">MemoActivity</string>
