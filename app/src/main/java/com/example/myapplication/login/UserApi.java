@@ -12,7 +12,13 @@ public interface UserApi {
 
     String BASE_URL = "http://suwonsmartapp.iptime.org/test/junsuk2/";
 
+    // 로그인
     @GET("login.php")
     Call<ResultModel> login(@Query("email") String email,
                             @Query("password") String password);
+
+    // 회원가입
+    @GET("insert.php")
+    Call<ResultModel> signUp();
+
 }
