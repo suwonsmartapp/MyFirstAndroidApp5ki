@@ -24,6 +24,7 @@ import com.example.myapplication.activities.GeoIpActivity;
 import com.example.myapplication.activities.ImageFragmentActivity;
 import com.example.myapplication.activities.LifeCycleActivity;
 import com.example.myapplication.activities.ListViewExamActivity;
+import com.example.myapplication.activities.LoginActivity;
 import com.example.myapplication.activities.MainActivity;
 import com.example.myapplication.activities.MapsActivity;
 import com.example.myapplication.activities.MemoActivity;
@@ -86,6 +87,7 @@ public class ListViewActivity extends AppCompatActivity {
         addItem("뮤직 플레이어", "아주대 218쪽", MusicPlayerActivity.class);
         addItem("NavigationDrawer", "기본 템플릿", NavigationDrawerActivity.class);
         addItem("Service", "IntentService, Service, bindService", ServiceActivity.class);
+        addItem("로그인", "PHP와 연동", LoginActivity.class);
 
         Collections.reverse(mDataList);
 
