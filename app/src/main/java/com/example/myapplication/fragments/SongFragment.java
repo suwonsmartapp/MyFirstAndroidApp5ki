@@ -1,6 +1,13 @@
 package com.example.myapplication.fragments;
 
+import android.content.ContentUris;
+import android.content.Context;
+import android.database.Cursor;
+import android.media.MediaMetadataRetriever;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.BaseColumns;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -10,10 +17,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.models.Song;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.myapplication.adapters.CursorRecyclerViewAdapter;
 
 /**
  * Created by junsuk on 2017. 3. 9..
@@ -33,19 +37,23 @@ public class SongFragment extends Fragment {
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
-        List<Song> data = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
-            data.add(new Song("제목 " + i, "아티스트 " + i));
-        }
-        recyclerView.setAdapter(new SongRecyclerAdapter(data));
+        Cursor cursor = getActivity().getContentResolver()
+                .query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                        null,
+                        null,
+                        null,
+                        null);
+
+        recyclerView.setAdapter(new SongRecyclerAdapter(getActivity(), cursor));
     }
 
-    public static class SongRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
+    public static class SongRecyclerAdapter extends CursorRecyclerViewAdapter<ViewHolder> {
 
-        private final List<Song> mData;
+        private Context mContext;
 
-        public SongRecyclerAdapter(List<Song> data) {
-            mData = data;
+        public SongRecyclerAdapter(Context context, Cursor cursor) {
+            super(context, cursor);
+            mContext = context;
         }
 
         @Override
@@ -54,15 +62,27 @@ public class SongFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            Song song = mData.get(position);
-            holder.titleTextView.setText(song.getTitle());
-            holder.artistTextView.setText(song.getArtist());
-        }
+        public void onBindViewHolder(ViewHolder viewHolder, Cursor cursor) {
+            // content://audio/media/1"
+            Uri uri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, cursor.getLong(
+                    cursor.getColumnIndexOrThrow(BaseColumns._ID)));
 
-        @Override
-        public int getItemCount() {
-            return mData.size();
+            MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+            retriever.setDataSource(mContext, uri);
+
+            // 미디어 정보
+            String title = retriever.extractMetadata((MediaMetadataRetriever.METADATA_KEY_TITLE));
+            String artist = retriever.extractMetadata((MediaMetadataRetriever.METADATA_KEY_ARTIST));
+            String duration = retriever.extractMetadata((MediaMetadataRetriever.METADATA_KEY_DURATION));
+
+            // 오디오 앨범 자켓 이미지
+//            byte albumImage[] = retriever.getEmbeddedPicture();
+//            if (null != albumImage) {
+//                Bitmap bitmap = BitmapFactory.decodeByteArray(albumImage, 0, albumImage.length);
+//            }
+
+            viewHolder.titleTextView.setText(title);
+            viewHolder.artistTextView.setText(artist);
         }
     }
 
