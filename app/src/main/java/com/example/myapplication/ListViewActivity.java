@@ -31,6 +31,7 @@ import com.example.myapplication.activities.MemoActivity;
 import com.example.myapplication.activities.MusicPlayerActivity;
 import com.example.myapplication.activities.NaverTranslateApiActivity;
 import com.example.myapplication.activities.NavigationDrawerActivity;
+import com.example.myapplication.activities.RealmExamActivity;
 import com.example.myapplication.activities.RecyclerViewActivity;
 import com.example.myapplication.activities.ScrollingActivity;
 import com.example.myapplication.activities.ServiceActivity;
@@ -88,6 +89,7 @@ public class ListViewActivity extends AppCompatActivity {
         addItem("NavigationDrawer", "기본 템플릿", NavigationDrawerActivity.class);
         addItem("Service", "IntentService, Service, bindService", ServiceActivity.class);
         addItem("로그인", "PHP와 연동", LoginActivity.class);
+        addItem("로그인", "Realm", RealmExamActivity.class);
 
         Collections.reverse(mDataList);
 
