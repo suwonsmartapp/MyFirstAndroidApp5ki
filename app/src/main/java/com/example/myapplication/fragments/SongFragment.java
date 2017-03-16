@@ -19,6 +19,8 @@ import android.widget.TextView;
 import com.example.myapplication.R;
 import com.example.myapplication.adapters.CursorRecyclerViewAdapter;
 
+import org.greenrobot.eventbus.EventBus;
+
 /**
  * Created by junsuk on 2017. 3. 9..
  */
@@ -64,10 +66,10 @@ public class SongFragment extends Fragment {
         @Override
         public void onBindViewHolder(ViewHolder viewHolder, Cursor cursor) {
             // content://audio/media/1"
-            Uri uri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, cursor.getLong(
+            final Uri uri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, cursor.getLong(
                     cursor.getColumnIndexOrThrow(BaseColumns._ID)));
 
-            MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+            final MediaMetadataRetriever retriever = new MediaMetadataRetriever();
             retriever.setDataSource(mContext, uri);
 
             // 미디어 정보
@@ -83,6 +85,23 @@ public class SongFragment extends Fragment {
 
             viewHolder.titleTextView.setText(title);
             viewHolder.artistTextView.setText(artist);
+
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    /**
+                     * 음악 틀기
+                     * {@link com.example.myapplication.activities.MusicPlayerActivity#playMusic(Uri)}
+                     */
+                    EventBus.getDefault().post(uri);
+
+                    /**
+                     * 아래쪽 프래그먼트로 정보 쏘기
+                     * * {@link MusicControllerFragment#updateUI(MediaMetadataRetriever)}
+                     */
+                    EventBus.getDefault().post(retriever);
+                }
+            });
         }
     }
 
