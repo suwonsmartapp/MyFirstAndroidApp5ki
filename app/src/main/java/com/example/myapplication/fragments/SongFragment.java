@@ -2,6 +2,7 @@ package com.example.myapplication.fragments;
 
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.adapters.CursorRecyclerViewAdapter;
+import com.example.myapplication.services.MusicService;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -91,9 +93,12 @@ public class SongFragment extends Fragment {
                 public void onClick(View v) {
                     /**
                      * 음악 틀기
-                     * {@link com.example.myapplication.activities.MusicPlayerActivity#playMusic(Uri)}
+                     * {@link com.example.myapplication.services.MusicService#playMusic(Uri)}
                      */
-                    EventBus.getDefault().post(uri);
+                    Intent intent = new Intent(mContext, MusicService.class);
+                    intent.setAction(MusicService.ACTION_PLAY);
+                    intent.putExtra("uri", uri);
+                    mContext.startService(intent);
 
                     /**
                      * 아래쪽 프래그먼트로 정보 쏘기
