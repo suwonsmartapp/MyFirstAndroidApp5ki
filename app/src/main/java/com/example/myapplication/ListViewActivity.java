@@ -18,6 +18,7 @@ import com.example.myapplication.activities.BasketballActivity;
 import com.example.myapplication.activities.BroadcastReceiverActivity;
 import com.example.myapplication.activities.ChatActivity;
 import com.example.myapplication.activities.ColorFragmentActivity;
+import com.example.myapplication.activities.CustomDesignActivity;
 import com.example.myapplication.activities.FragmentExam1Activity;
 import com.example.myapplication.activities.GalleryActivity;
 import com.example.myapplication.activities.GeoIpActivity;
@@ -90,6 +91,7 @@ public class ListViewActivity extends AppCompatActivity {
         addItem("Service", "IntentService, Service, bindService", ServiceActivity.class);
         addItem("로그인", "PHP와 연동", LoginActivity.class);
         addItem("로그인", "Realm", RealmExamActivity.class);
+        addItem("커스텀 디자인", "Toast", CustomDesignActivity.class);
 
         Collections.reverse(mDataList);
 

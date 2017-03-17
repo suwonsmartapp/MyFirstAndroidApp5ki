@@ -132,9 +132,11 @@
         <activity
             android:name=".activities.LoginActivity"
             android:label="@string/title_activity_login" />
-        <activity android:name=".activities.RealmExamActivity"></activity>
+        <activity android:name=".activities.RealmExamActivity" />
 
         <service android:name=".services.MusicService" />
+
+        <activity android:name=".activities.CustomDesignActivity"></activity>
     </application>
 
 </manifest>
