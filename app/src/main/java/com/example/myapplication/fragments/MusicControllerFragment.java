@@ -1,5 +1,6 @@
 package com.example.myapplication.fragments;
 
+import android.content.Intent;
 import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
+import com.example.myapplication.services.MusicService;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -80,10 +82,8 @@ public class MusicControllerFragment extends Fragment implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-
-        /**
-         * {@link com.example.myapplication.activities.MusicPlayerActivity#clickPlayButton(View)}
-         */
-        EventBus.getDefault().post(v);
+        Intent intent = new Intent(getActivity(), MusicService.class);
+        intent.setAction(MusicService.ACTION_RESUME);
+        getActivity().startService(intent);
     }
 }

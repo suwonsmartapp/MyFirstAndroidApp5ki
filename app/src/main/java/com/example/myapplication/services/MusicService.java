@@ -7,7 +7,6 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.view.View;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -20,16 +19,13 @@ import java.io.IOException;
 
 public class MusicService extends Service {
     public static String ACTION_PLAY = "play";
-    public static String ACTION_PAUSE = "pause";
+    public static String ACTION_RESUME = "resume";
 
     private MediaPlayer mMediaPlayer;
 
     @Override
     public void onCreate() {
         super.onCreate();
-
-        mMediaPlayer = new MediaPlayer();
-        mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
         EventBus.getDefault().register(this);
     }
@@ -45,8 +41,8 @@ public class MusicService extends Service {
         String action = intent.getAction();
         if (ACTION_PLAY.equals(action)) {
             playMusic((Uri) intent.getParcelableExtra("uri"));
-        } else if (ACTION_PAUSE.equals(action)) {
-
+        } else if (ACTION_RESUME.equals(action)) {
+            clickResumeButton();
         }
         return START_STICKY;
     }
@@ -54,6 +50,16 @@ public class MusicService extends Service {
     @Subscribe
     public void playMusic(Uri uri) {
         try {
+            if (mMediaPlayer == null) {
+                mMediaPlayer = new MediaPlayer();
+                mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            }
+            if (mMediaPlayer.isPlaying()) {
+                mMediaPlayer.stop();
+                mMediaPlayer.release();
+                mMediaPlayer = new MediaPlayer();
+                mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            }
             mMediaPlayer.setDataSource(this, uri);
             mMediaPlayer.prepareAsync();
             mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -73,8 +79,7 @@ public class MusicService extends Service {
 
     }
 
-    @Subscribe
-    public void clickPlayButton(View v) {
+    private void clickResumeButton() {
         if (isPlaying()) {
             mMediaPlayer.pause();
         } else {
