@@ -36,6 +36,10 @@ public class MusicService extends Service {
         return START_STICKY;
     }
 
+    public int getDuration() {
+        return mMediaPlayer.getDuration();
+    }
+
     public void playMusic(Uri uri) {
         try {
             // 현재 재생중인 정보

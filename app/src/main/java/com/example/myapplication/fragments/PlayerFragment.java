@@ -13,10 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 import com.example.myapplication.services.MusicService;
+
+import java.util.Locale;
 
 /**
  * Created by junsuk on 2017. 3. 9..
@@ -28,6 +31,7 @@ public class PlayerFragment extends Fragment {
     private boolean mBound = false;
 
     private ImageView mAlbumImageView;
+    private TextView mDurationTextView;
 
     @Nullable
     @Override
@@ -40,6 +44,7 @@ public class PlayerFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mAlbumImageView = (ImageView) view.findViewById(R.id.album_image);
+        mDurationTextView = (TextView) view.findViewById(R.id.duration_text);
     }
 
     @Override
@@ -82,8 +87,13 @@ public class PlayerFragment extends Fragment {
         if (playing) {
             MediaMetadataRetriever retriever = mService.getMetaDataRetriever();
             if (retriever != null) {
-                String title = retriever.extractMetadata((MediaMetadataRetriever.METADATA_KEY_TITLE));
-                String artist = retriever.extractMetadata((MediaMetadataRetriever.METADATA_KEY_ARTIST));
+                // ms값
+                int longDuration = mService.getDuration();
+
+                int min = longDuration / 1000 / 60;
+                int sec = longDuration / 1000 % 60;
+
+                mDurationTextView.setText(String.format(Locale.KOREA, "%d:%02d", min, sec));
 
                 // 오디오 앨범 자켓 이미지
                 byte albumImage[] = retriever.getEmbeddedPicture();
@@ -96,4 +106,6 @@ public class PlayerFragment extends Fragment {
             }
         }
     }
+
+
 }
