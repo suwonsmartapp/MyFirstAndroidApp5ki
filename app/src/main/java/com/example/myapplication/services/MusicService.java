@@ -3,13 +3,14 @@ package com.example.myapplication.services;
 import android.app.Service;
 import android.content.Intent;
 import android.media.AudioManager;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 
@@ -22,19 +23,7 @@ public class MusicService extends Service {
     public static String ACTION_RESUME = "resume";
 
     private MediaPlayer mMediaPlayer;
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
+    private MediaMetadataRetriever mRetriever;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -47,9 +36,12 @@ public class MusicService extends Service {
         return START_STICKY;
     }
 
-    @Subscribe
     public void playMusic(Uri uri) {
         try {
+            // 현재 재생중인 정보
+            mRetriever = new MediaMetadataRetriever();
+            mRetriever.setDataSource(this, uri);
+
             if (mMediaPlayer == null) {
                 mMediaPlayer = new MediaPlayer();
                 mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -68,15 +60,22 @@ public class MusicService extends Service {
                     mp.start();
 
                     /**
-                     * {@link com.example.myapplication.fragments.MusicControllerFragment#updatePlayButton(Boolean)}
+                     * {@link com.example.myapplication.fragments.MusicControllerFragment#updateUI(Boolean)}
                      */
                     EventBus.getDefault().post(isPlaying());
                 }
             });
+
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+    }
+
+    public MediaMetadataRetriever getMetaDataRetriever() {
+        return mRetriever;
     }
 
     private void clickResumeButton() {
@@ -87,7 +86,7 @@ public class MusicService extends Service {
         }
 
         /**
-         * {@link com.example.myapplication.fragments.MusicControllerFragment#updatePlayButton(Boolean)}
+         * {@link com.example.myapplication.fragments.MusicControllerFragment#updateUI(Boolean)}
          */
         EventBus.getDefault().post(isPlaying());
     }
@@ -102,6 +101,15 @@ public class MusicService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return mBinder;
+    }
+
+    private final IBinder mBinder = new LocalBinder();
+
+    public class LocalBinder extends Binder {
+        public MusicService getService() {
+            // Return this instance of LocalService so clients can call public methods
+            return MusicService.this;
+        }
     }
 }

@@ -21,8 +21,6 @@ import com.example.myapplication.R;
 import com.example.myapplication.adapters.CursorRecyclerViewAdapter;
 import com.example.myapplication.services.MusicService;
 
-import org.greenrobot.eventbus.EventBus;
-
 /**
  * Created by junsuk on 2017. 3. 9..
  */
@@ -104,7 +102,8 @@ public class SongFragment extends Fragment {
                      * 아래쪽 프래그먼트로 정보 쏘기
                      * * {@link MusicControllerFragment#updateUI(MediaMetadataRetriever)}
                      */
-                    EventBus.getDefault().post(retriever);
+//                    EventBus.getDefault().post(retriever);
+
                 }
             });
         }
