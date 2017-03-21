@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -32,6 +34,9 @@ public class PlayerFragment extends Fragment {
 
     private ImageView mAlbumImageView;
     private TextView mDurationTextView;
+    private SeekBar mSeekBar;
+    private TextView mCurrentTimeTextView;
+    private CountDownTimer mCountDownTimer;
 
     @Nullable
     @Override
@@ -45,6 +50,8 @@ public class PlayerFragment extends Fragment {
 
         mAlbumImageView = (ImageView) view.findViewById(R.id.album_image);
         mDurationTextView = (TextView) view.findViewById(R.id.duration_text);
+        mCurrentTimeTextView = (TextView) view.findViewById(R.id.current_time_text);
+        mSeekBar = (SeekBar) view.findViewById(R.id.seek_bar);
     }
 
     @Override
@@ -88,12 +95,14 @@ public class PlayerFragment extends Fragment {
             MediaMetadataRetriever retriever = mService.getMetaDataRetriever();
             if (retriever != null) {
                 // ms값
-                int longDuration = mService.getDuration();
+                int longDuration = mService.getMediaPlayer().getDuration();
 
                 int min = longDuration / 1000 / 60;
                 int sec = longDuration / 1000 % 60;
 
                 mDurationTextView.setText(String.format(Locale.KOREA, "%d:%02d", min, sec));
+
+                mSeekBar.setMax(longDuration);
 
                 // 오디오 앨범 자켓 이미지
                 byte albumImage[] = retriever.getEmbeddedPicture();
@@ -103,6 +112,24 @@ public class PlayerFragment extends Fragment {
                     Glide.with(this).load(R.mipmap.ic_launcher).into(mAlbumImageView);
                 }
 
+                // 카운트다운 시작
+                mCountDownTimer = new CountDownTimer(longDuration, 1000) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        int currentPosition = mService.getMediaPlayer().getCurrentPosition();
+                        mSeekBar.setProgress(currentPosition);
+
+                        int min = currentPosition / 1000 / 60;
+                        int sec = currentPosition / 1000 % 60;
+
+                        mCurrentTimeTextView.setText(String.format(Locale.KOREA, "%d:%02d", min, sec));
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        mCountDownTimer = null;
+                    }
+                }.start();
             }
         }
     }

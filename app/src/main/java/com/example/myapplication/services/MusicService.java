@@ -36,8 +36,8 @@ public class MusicService extends Service {
         return START_STICKY;
     }
 
-    public int getDuration() {
-        return mMediaPlayer.getDuration();
+    public MediaPlayer getMediaPlayer() {
+        return mMediaPlayer;
     }
 
     public void playMusic(Uri uri) {
@@ -69,7 +69,6 @@ public class MusicService extends Service {
                     EventBus.getDefault().post(isPlaying());
                 }
             });
-
 
 
         } catch (IOException e) {
