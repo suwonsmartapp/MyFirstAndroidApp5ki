@@ -21,6 +21,9 @@ import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 import com.example.myapplication.services.MusicService;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.Locale;
 
 /**
@@ -52,11 +55,31 @@ public class PlayerFragment extends Fragment {
         mDurationTextView = (TextView) view.findViewById(R.id.duration_text);
         mCurrentTimeTextView = (TextView) view.findViewById(R.id.current_time_text);
         mSeekBar = (SeekBar) view.findViewById(R.id.seekBar);
+
+
+        mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                mService.getMediaPlayer().seekTo(seekBar.getProgress());
+            }
+        });
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        EventBus.getDefault().register(this);
+
         Intent intent = new Intent(getActivity(), MusicService.class);
         getActivity().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     }
@@ -64,6 +87,8 @@ public class PlayerFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
+        EventBus.getDefault().unregister(this);
+
         if (mBound) {
             getActivity().unbindService(mConnection);
             mBound = false;
@@ -112,27 +137,44 @@ public class PlayerFragment extends Fragment {
                     Glide.with(this).load(R.mipmap.ic_launcher).into(mAlbumImageView);
                 }
 
-                // 카운트다운 시작
-                mCountDownTimer = new CountDownTimer(longDuration, 1000) {
-                    @Override
-                    public void onTick(long millisUntilFinished) {
-                        int currentPosition = mService.getMediaPlayer().getCurrentPosition();
-                        mSeekBar.setProgress(currentPosition);
-
-                        int min = currentPosition / 1000 / 60;
-                        int sec = currentPosition / 1000 % 60;
-
-                        mCurrentTimeTextView.setText(String.format(Locale.KOREA, "%d:%02d", min, sec));
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        mCountDownTimer = null;
-                    }
-                }.start();
             }
         }
+        updateTimer(playing);
     }
 
+    @Subscribe
+    public void updateTimer(boolean isPlaying) {
+        if (!isPlaying) {
+            if (mCountDownTimer != null) {
+                mCountDownTimer.cancel();
+            }
+            mCountDownTimer = null;
+        } else {
+
+            int duration = mService.getMediaPlayer().getDuration() - mService.getMediaPlayer().getCurrentPosition();
+            // 카운트다운 시작
+            if (mCountDownTimer != null) {
+                mCountDownTimer.cancel();
+                mCountDownTimer = null;
+            }
+            mCountDownTimer = new CountDownTimer(duration, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    int currentPosition = mService.getMediaPlayer().getCurrentPosition();
+                    mSeekBar.setProgress(currentPosition);
+
+                    int min = currentPosition / 1000 / 60;
+                    int sec = currentPosition / 1000 % 60;
+
+                    mCurrentTimeTextView.setText(String.format(Locale.KOREA, "%d:%02d", min, sec));
+                }
+
+                @Override
+                public void onFinish() {
+                    mCountDownTimer = null;
+                }
+            }.start();
+        }
+    }
 
 }
