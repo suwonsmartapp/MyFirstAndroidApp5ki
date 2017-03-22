@@ -1,14 +1,23 @@
 package com.example.myapplication.services;
 
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
+
+import com.example.myapplication.R;
+import com.example.myapplication.activities.MusicPlayerActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -66,11 +75,60 @@ public class MusicService extends Service {
                 }
             });
 
+            // foreground service
+            showNotification();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+    }
+
+    private void showNotification() {
+        String title = mRetriever.extractMetadata((MediaMetadataRetriever.METADATA_KEY_TITLE));
+        String artist = mRetriever.extractMetadata((MediaMetadataRetriever.METADATA_KEY_ARTIST));
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        builder.setContentTitle(title);
+        builder.setContentText(artist);
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+
+        Bitmap bitmap = BitmapFactory.decodeResource(
+                getResources(), R.mipmap.ic_launcher);
+
+        builder.setLargeIcon(bitmap);
+
+        // 알림을 클릭하면 수행될 인텐트
+        Intent resultIntent = new Intent(this, MusicPlayerActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,
+                0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(pendingIntent);
+
+        // 클릭하면 날리기
+        builder.setAutoCancel(true);
+
+        // 색상
+        builder.setColor(Color.YELLOW);
+
+        // 기본 알림음
+        Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        builder.setSound(uri);
+
+        // 진동
+        builder.setVibrate(new long[]{100, 200, 300});
+
+        Intent stopIntent = new Intent(this, MusicService.class);
+        stopIntent.setAction(ACTION_RESUME);
+        PendingIntent stopPendingIntent = PendingIntent.getService(this,
+                1, stopIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        // 액션
+        builder.addAction(R.mipmap.ic_launcher, "중지", stopPendingIntent);
+        builder.addAction(R.mipmap.ic_launcher, "다음곡", pendingIntent);
+        builder.addAction(R.mipmap.ic_launcher, "이전곡", pendingIntent);
+
+        // 알림 표시
+        startForeground(1, builder.build());
     }
 
     public MediaMetadataRetriever getMetaDataRetriever() {
