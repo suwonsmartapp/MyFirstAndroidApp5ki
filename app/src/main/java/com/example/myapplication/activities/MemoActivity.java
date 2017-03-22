@@ -14,6 +14,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.transition.ChangeImageTransform;
 import android.transition.TransitionSet;
 import android.util.Log;
@@ -117,6 +118,29 @@ public class MemoActivity extends AppCompatActivity {
 
         // 어댑터
         mAdapter = new MemoRecyclerAdapter(this, mMemoList);
+
+        // 스와이프 삭제 구현
+        ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
+            //
+            @Override
+            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG, ItemTouchHelper.UP | ItemTouchHelper.DOWN) |
+                        makeFlag(ItemTouchHelper.ACTION_STATE_SWIPE, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
+            }
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            // 스와이프 끝났을 때
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                mAdapter.delete(viewHolder.getAdapterPosition());
+            }
+        });
+        helper.attachToRecyclerView(mMemoListView);
+        mMemoListView.addItemDecoration(helper);
 
         mMemoListView.setAdapter(mAdapter);
 

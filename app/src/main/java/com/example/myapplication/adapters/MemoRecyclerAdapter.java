@@ -27,6 +27,15 @@ public class MemoRecyclerAdapter extends RecyclerView.Adapter<MemoRecyclerAdapte
 
     private final Context mContext;
 
+    public void delete(int adapterPosition) {
+        mData.remove(adapterPosition);
+        notifyItemRemoved(adapterPosition);
+    }
+
+    public void move(int adapterPosition, int targetPosition) {
+        mData.add(targetPosition, mData.remove(adapterPosition));
+    }
+
     // EventBus 용 이벤트
     public static class ItemClickEvent {
         public ItemClickEvent(View imageView, View titleView, View contentView, int position, long id) {
