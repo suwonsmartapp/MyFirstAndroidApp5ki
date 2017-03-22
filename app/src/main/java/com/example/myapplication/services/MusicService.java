@@ -15,6 +15,7 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
+import android.widget.RemoteViews;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activities.MusicPlayerActivity;
@@ -89,14 +90,22 @@ public class MusicService extends Service {
         String artist = mRetriever.extractMetadata((MediaMetadataRetriever.METADATA_KEY_ARTIST));
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        builder.setContentTitle(title);
-        builder.setContentText(artist);
+//        builder.setContentTitle(title);
+//        builder.setContentText(artist);
         builder.setSmallIcon(R.mipmap.ic_launcher);
+
+        RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.remote_view);
+        remoteViews.setTextViewText(R.id.title_text, title);
+        remoteViews.setTextViewText(R.id.artist_text, artist);
+
+        builder.setCustomContentView(remoteViews);
 
         Bitmap bitmap = BitmapFactory.decodeResource(
                 getResources(), R.mipmap.ic_launcher);
 
-        builder.setLargeIcon(bitmap);
+//        builder.setLargeIcon(bitmap);
+
+        remoteViews.setImageViewBitmap(R.id.image_view, bitmap);
 
         // 알림을 클릭하면 수행될 인텐트
         Intent resultIntent = new Intent(this, MusicPlayerActivity.class);
@@ -123,9 +132,9 @@ public class MusicService extends Service {
                 1, stopIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         // 액션
-        builder.addAction(R.mipmap.ic_launcher, "중지", stopPendingIntent);
-        builder.addAction(R.mipmap.ic_launcher, "다음곡", pendingIntent);
-        builder.addAction(R.mipmap.ic_launcher, "이전곡", pendingIntent);
+//        builder.addAction(R.mipmap.ic_launcher, "중지", stopPendingIntent);
+//        builder.addAction(R.mipmap.ic_launcher, "다음곡", pendingIntent);
+//        builder.addAction(R.mipmap.ic_launcher, "이전곡", pendingIntent);
 
         // 알림 표시
         startForeground(1, builder.build());
