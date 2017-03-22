@@ -51,7 +51,7 @@ public class PlayerFragment extends Fragment {
         mAlbumImageView = (ImageView) view.findViewById(R.id.album_image);
         mDurationTextView = (TextView) view.findViewById(R.id.duration_text);
         mCurrentTimeTextView = (TextView) view.findViewById(R.id.current_time_text);
-        mSeekBar = (SeekBar) view.findViewById(R.id.seek_bar);
+        mSeekBar = (SeekBar) view.findViewById(R.id.seekBar);
     }
 
     @Override

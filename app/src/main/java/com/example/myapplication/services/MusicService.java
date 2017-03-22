@@ -46,16 +46,12 @@ public class MusicService extends Service {
             mRetriever = new MediaMetadataRetriever();
             mRetriever.setDataSource(this, uri);
 
-            if (mMediaPlayer == null) {
-                mMediaPlayer = new MediaPlayer();
-                mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            }
-            if (mMediaPlayer.isPlaying()) {
+            if (mMediaPlayer != null) {
                 mMediaPlayer.stop();
                 mMediaPlayer.release();
-                mMediaPlayer = new MediaPlayer();
-                mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             }
+            mMediaPlayer = new MediaPlayer();
+            mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mMediaPlayer.setDataSource(this, uri);
             mMediaPlayer.prepareAsync();
             mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
