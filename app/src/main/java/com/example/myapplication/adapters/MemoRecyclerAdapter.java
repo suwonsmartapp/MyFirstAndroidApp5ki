@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.example.myapplication.models.Memo;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Created by junsuk on 2017. 3. 6..
@@ -27,9 +29,17 @@ public class MemoRecyclerAdapter extends RecyclerView.Adapter<MemoRecyclerAdapte
 
     private final Context mContext;
 
+    private Stack<Pair<Integer, Memo>> mUndoStack;
+
     public void delete(int adapterPosition) {
-        mData.remove(adapterPosition);
+        mUndoStack.push(new Pair<>(adapterPosition, mData.remove(adapterPosition)));
         notifyItemRemoved(adapterPosition);
+    }
+
+    public void undo() {
+        Pair<Integer, Memo> pair = mUndoStack.pop();
+        mData.add(pair.first, pair.second);
+        notifyItemInserted(pair.first);
     }
 
     public void move(int adapterPosition, int targetPosition) {
@@ -58,6 +68,7 @@ public class MemoRecyclerAdapter extends RecyclerView.Adapter<MemoRecyclerAdapte
     public MemoRecyclerAdapter(Context context, List<Memo> memoList) {
         mContext = context;
         mData = memoList;
+        mUndoStack = new Stack<>();
     }
 
     @Override

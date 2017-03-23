@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
@@ -137,6 +138,13 @@ public class MemoActivity extends AppCompatActivity {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 mAdapter.delete(viewHolder.getAdapterPosition());
+                Snackbar.make(viewHolder.itemView, "삭제됨", Snackbar.LENGTH_LONG)
+                        .setAction("취소", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mAdapter.undo();
+                            }
+                        }).show();
             }
         });
         helper.attachToRecyclerView(mMemoListView);
