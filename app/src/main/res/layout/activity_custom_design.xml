@@ -12,4 +12,16 @@
         android:onClick="showToast"
         android:text="토스트" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="showDialogActivity"
+        android:text="다이얼로그 Activity" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="showAlertDialog"
+        android:text="AlertDialog" />
+
 </LinearLayout>
