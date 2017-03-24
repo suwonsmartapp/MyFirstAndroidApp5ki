@@ -24,4 +24,24 @@
         android:onClick="showAlertDialog"
         android:text="AlertDialog" />
 
+    <com.example.myapplication.views.JoystickView
+        android:layout_width="200dp"
+        android:layout_height="200dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="B" />
+
+    </LinearLayout>
+
 </LinearLayout>

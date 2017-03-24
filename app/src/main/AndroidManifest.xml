@@ -137,8 +137,10 @@
         <service android:name=".services.MusicService" />
 
         <activity android:name=".activities.CustomDesignActivity" />
-        <activity android:name=".activities.DialogThemeActivity"
+        <activity
+            android:name=".activities.DialogThemeActivity"
             android:theme="@style/Theme.AppCompat.Dialog" />
+        <activity android:name=".activities.JoystickActivity"></activity>
     </application>
 
 </manifest>
