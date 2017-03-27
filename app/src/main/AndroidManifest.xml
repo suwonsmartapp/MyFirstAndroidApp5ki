@@ -140,7 +140,8 @@
         <activity
             android:name=".activities.DialogThemeActivity"
             android:theme="@style/Theme.AppCompat.Dialog" />
-        <activity android:name=".activities.JoystickActivity"></activity>
+        <activity android:name=".activities.JoystickActivity" />
+        <activity android:name=".activities.DataBindingActivity"></activity>
     </application>
 
 </manifest>
