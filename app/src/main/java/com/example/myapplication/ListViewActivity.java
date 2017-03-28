@@ -32,6 +32,7 @@ import com.example.myapplication.activities.MemoActivity;
 import com.example.myapplication.activities.MusicPlayerActivity;
 import com.example.myapplication.activities.NaverTranslateApiActivity;
 import com.example.myapplication.activities.NavigationDrawerActivity;
+import com.example.myapplication.activities.NewsXMLActivity;
 import com.example.myapplication.activities.RealmExamActivity;
 import com.example.myapplication.activities.RecyclerViewActivity;
 import com.example.myapplication.activities.ScrollingActivity;
@@ -92,6 +93,7 @@ public class ListViewActivity extends AppCompatActivity {
         addItem("로그인", "PHP와 연동", LoginActivity.class);
         addItem("로그인", "Realm", RealmExamActivity.class);
         addItem("커스텀 디자인", "Toast", CustomDesignActivity.class);
+        addItem("뉴스", "XML 파싱", NewsXMLActivity.class);
 
         Collections.reverse(mDataList);
 
