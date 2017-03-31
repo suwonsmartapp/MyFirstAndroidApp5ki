@@ -143,6 +143,7 @@
         <activity android:name=".activities.JoystickActivity" />
         <activity android:name=".activities.DataBindingActivity" />
         <activity android:name=".activities.PaletteActivity"></activity>
+        <activity android:name=".activities.NewsXMLActivity"></activity>
     </application>
 
 </manifest>
