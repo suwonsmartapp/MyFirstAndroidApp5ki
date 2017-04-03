@@ -6,7 +6,6 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.example.myapplication"
-        minSdkVersion 21
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -24,6 +23,14 @@ android {
     dataBinding {
         enabled = true
     }
+    productFlavors {
+        dev {
+            minSdkVersion 21
+        }
+        prod {
+            minSdkVersion 17
+        }
+    }
 }
 
 dependencies {
@@ -32,7 +39,6 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile 'junit:junit:4.12'
-
     compile 'com.android.support:appcompat-v7:25.3.0'
     compile 'com.android.support:design:25.3.0'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
