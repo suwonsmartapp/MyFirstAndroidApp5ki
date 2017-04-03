@@ -1,6 +1,6 @@
 package com.example.myapplication;
 
-import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -9,7 +9,7 @@ import io.realm.RealmConfiguration;
  * Created by junsuk on 2017. 3. 15..
  */
 
-public class MyApplication extends Application {
+public class MyApplication extends MultiDexApplication {
 
     @Override
     public void onCreate() {
