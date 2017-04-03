@@ -88,7 +88,7 @@
 -dontwarn org.apache.http.**
 
 # 모델 클래스
--keep class com.team_coder.overwatchcic.models.** {*;}
+-keep class com.example.myapplication.models.** {*;}
 -ignorewarnings
 
 # EventBus 3.0
@@ -228,3 +228,10 @@
 -keep class io.realm.** { *; }
 -dontwarn javax.**
 -dontwarn io.realm.**
+
+# TedPermission
+-keepattributes *Annotation*
+-keepclassmembers class ** {
+    @com.squareup.otto.Subscribe public *;
+    @com.squareup.otto.Produce public *;
+}
