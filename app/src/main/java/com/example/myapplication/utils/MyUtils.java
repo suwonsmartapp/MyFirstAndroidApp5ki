@@ -18,6 +18,10 @@ import com.example.myapplication.R;
  */
 
 public class MyUtils {
+    public static int sum(int a, int b) {
+        return a + b;
+    }
+
     public static Toast makeText(Context context, CharSequence message, int duration) {
         Toast result = new Toast(context);
 
