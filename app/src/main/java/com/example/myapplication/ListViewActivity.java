@@ -38,6 +38,7 @@ import com.example.myapplication.activities.RealmExamActivity;
 import com.example.myapplication.activities.RecyclerViewActivity;
 import com.example.myapplication.activities.ScrollingActivity;
 import com.example.myapplication.activities.ServiceActivity;
+import com.example.myapplication.activities.SettingsActivity;
 import com.example.myapplication.activities.ThreadActivity;
 import com.example.myapplication.activities.ViewPagerActivity;
 import com.example.myapplication.activities.ViewPagerExamActivity;
@@ -96,6 +97,7 @@ public class ListViewActivity extends AppCompatActivity {
         addItem("커스텀 디자인", "Toast", CustomDesignActivity.class);
         addItem("Palette", "Palette", PaletteActivity.class);
         addItem("뉴스", "XML 파싱", NewsXMLActivity.class);
+        addItem("설정화면", "SettingsActivity", SettingsActivity.class);
 
         Collections.reverse(mDataList);
 

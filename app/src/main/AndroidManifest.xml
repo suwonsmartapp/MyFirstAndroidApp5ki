@@ -142,8 +142,11 @@
             android:theme="@style/Theme.AppCompat.Dialog" />
         <activity android:name=".activities.JoystickActivity" />
         <activity android:name=".activities.DataBindingActivity" />
-        <activity android:name=".activities.PaletteActivity"></activity>
-        <activity android:name=".activities.NewsXMLActivity"></activity>
+        <activity android:name=".activities.PaletteActivity" />
+        <activity android:name=".activities.NewsXMLActivity" />
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
     </application>
 
 </manifest>

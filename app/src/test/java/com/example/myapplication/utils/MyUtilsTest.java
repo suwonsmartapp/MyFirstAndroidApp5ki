@@ -31,7 +31,7 @@ public class MyUtilsTest {
     public void sum() throws Exception {
         int result = MyUtils.sum(10, 20);
         // case1
-        Assert.assertEquals(31, result);
+        Assert.assertEquals(30, result);
         // case2
         Assert.assertNotEquals(29, result);
     }
