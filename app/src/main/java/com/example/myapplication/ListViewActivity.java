@@ -19,6 +19,7 @@ import com.example.myapplication.activities.BroadcastReceiverActivity;
 import com.example.myapplication.activities.ChatActivity;
 import com.example.myapplication.activities.ColorFragmentActivity;
 import com.example.myapplication.activities.CustomDesignActivity;
+import com.example.myapplication.activities.FacebookLoginActivity;
 import com.example.myapplication.activities.FragmentExam1Activity;
 import com.example.myapplication.activities.GalleryActivity;
 import com.example.myapplication.activities.GeoIpActivity;
@@ -98,6 +99,7 @@ public class ListViewActivity extends AppCompatActivity {
         addItem("Palette", "Palette", PaletteActivity.class);
         addItem("뉴스", "XML 파싱", NewsXMLActivity.class);
         addItem("설정화면", "SettingsActivity", SettingsActivity.class);
+        addItem("소셜 로그인", "Facebook Login", FacebookLoginActivity.class);
 
         Collections.reverse(mDataList);
 
