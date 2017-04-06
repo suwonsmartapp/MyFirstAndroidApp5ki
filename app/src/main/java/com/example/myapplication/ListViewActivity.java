@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.activities.AnimationActivity;
 import com.example.myapplication.activities.AsyncTaskActivity;
 import com.example.myapplication.activities.BankActivity;
 import com.example.myapplication.activities.BasketballActivity;
@@ -100,6 +101,7 @@ public class ListViewActivity extends AppCompatActivity {
         addItem("뉴스", "XML 파싱", NewsXMLActivity.class);
         addItem("설정화면", "SettingsActivity", SettingsActivity.class);
         addItem("소셜 로그인", "Facebook Login", FacebookLoginActivity.class);
+        addItem("잡효과", "TransitionDrawable", AnimationActivity.class);
 
         Collections.reverse(mDataList);
 
