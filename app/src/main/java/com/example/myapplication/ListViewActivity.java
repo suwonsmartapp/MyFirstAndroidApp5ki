@@ -39,6 +39,7 @@ import com.example.myapplication.activities.NewsXMLActivity;
 import com.example.myapplication.activities.RealmExamActivity;
 import com.example.myapplication.activities.RecyclerViewActivity;
 import com.example.myapplication.activities.ScrollingActivity;
+import com.example.myapplication.activities.SensorActivity;
 import com.example.myapplication.activities.ServiceActivity;
 import com.example.myapplication.activities.SettingsActivity;
 import com.example.myapplication.activities.ThreadActivity;
@@ -102,6 +103,7 @@ public class ListViewActivity extends AppCompatActivity {
         addItem("설정화면", "SettingsActivity", SettingsActivity.class);
         addItem("소셜 로그인", "Facebook Login", FacebookLoginActivity.class);
         addItem("잡효과", "TransitionDrawable", AnimationActivity.class);
+        addItem("센서", "조도", SensorActivity.class);
 
         Collections.reverse(mDataList);
 
