@@ -36,6 +36,7 @@ import com.example.myapplication.activities.NaverTranslateApiActivity;
 import com.example.myapplication.activities.NavigationDrawerActivity;
 import com.example.myapplication.activities.PaletteActivity;
 import com.example.myapplication.activities.NewsXMLActivity;
+import com.example.myapplication.activities.PermissionActivity;
 import com.example.myapplication.activities.RealmExamActivity;
 import com.example.myapplication.activities.RecyclerViewActivity;
 import com.example.myapplication.activities.ScrollingActivity;
@@ -104,6 +105,7 @@ public class ListViewActivity extends AppCompatActivity {
         addItem("소셜 로그인", "Facebook Login", FacebookLoginActivity.class);
         addItem("잡효과", "TransitionDrawable", AnimationActivity.class);
         addItem("센서", "조도", SensorActivity.class);
+        addItem("권한체크", "TedPermission", PermissionActivity.class);
 
         Collections.reverse(mDataList);
 
