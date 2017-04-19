@@ -53,6 +53,9 @@ public class MusicControllerFragment extends Fragment implements View.OnClickLis
 
         mPlayButton = (Button) view.findViewById(R.id.play_button);
         mPlayButton.setOnClickListener(this);
+
+        view.findViewById(R.id.prev_music_button).setOnClickListener(this);
+        view.findViewById(R.id.next_music_button).setOnClickListener(this);
     }
 
     private void updateMetaData(MediaMetadataRetriever retriever) {
@@ -102,7 +105,17 @@ public class MusicControllerFragment extends Fragment implements View.OnClickLis
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(getActivity(), MusicService.class);
-        intent.setAction(MusicService.ACTION_RESUME);
+        switch (v.getId()) {
+            case R.id.play_button:
+                intent.setAction(MusicService.ACTION_RESUME);
+                break;
+            case R.id.prev_music_button:
+                intent.setAction(MusicService.ACTION_PREV);
+                break;
+            case R.id.next_music_button:
+                intent.setAction(MusicService.ACTION_NEXT);
+                break;
+        }
         getActivity().startService(intent);
     }
 

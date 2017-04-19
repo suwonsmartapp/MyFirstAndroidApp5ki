@@ -2,7 +2,9 @@ package com.example.myapplication.services;
 
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.ContentUris;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -13,6 +15,8 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
+import android.provider.BaseColumns;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
@@ -23,25 +27,62 @@ import com.example.myapplication.activities.MusicPlayerActivity;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by junsuk on 2017. 3. 16..
  */
 
 public class MusicService extends Service {
-    public static String ACTION_PLAY = "play";
-    public static String ACTION_RESUME = "resume";
+    public static final String ACTION_PREV = "prev";
+    public static final String ACTION_NEXT = "next";
+    public static final String ACTION_PLAY = "play";
+    public static final String ACTION_RESUME = "resume";
 
     private MediaPlayer mMediaPlayer;
     private MediaMetadataRetriever mRetriever;
 
+    private List<Uri> mSongList;
+    private int mIndex = 0;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        mSongList = new ArrayList<>();
+        Cursor cursor = getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                null,
+                null,
+                null,
+                null);
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                Uri uri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, cursor.getLong(
+                        cursor.getColumnIndexOrThrow(BaseColumns._ID)));
+                mSongList.add(uri);
+            }
+            cursor.close();
+        }
+
+    }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         String action = intent.getAction();
-        if (ACTION_PLAY.equals(action)) {
-            playMusic((Uri) intent.getParcelableExtra("uri"));
-        } else if (ACTION_RESUME.equals(action)) {
-            clickResumeButton();
+        switch (action) {
+            case ACTION_PLAY:
+                playMusic((Uri) intent.getParcelableExtra("uri"));
+                break;
+            case ACTION_RESUME:
+                clickResumeButton();
+                break;
+            case ACTION_NEXT:
+                nextMusic();
+                break;
+            case ACTION_PREV:
+                prevMusic();
+                break;
         }
         return START_STICKY;
     }
@@ -50,7 +91,23 @@ public class MusicService extends Service {
         return mMediaPlayer;
     }
 
-    public void playMusic(Uri uri) {
+    public void nextMusic() {
+        mIndex++;
+        if (mIndex > mSongList.size() - 1) {
+            mIndex = 0;
+        }
+        playMusic(mSongList.get(mIndex));
+    }
+
+    public void prevMusic() {
+        mIndex--;
+        if (mIndex < 0) {
+            mIndex = mSongList.size() - 1;
+        }
+        playMusic(mSongList.get(mIndex));
+    }
+
+    public void playMusic(final Uri uri) {
         try {
             // 현재 재생중인 정보
             mRetriever = new MediaMetadataRetriever();
@@ -69,10 +126,18 @@ public class MusicService extends Service {
                 public void onPrepared(MediaPlayer mp) {
                     mp.start();
 
+                    mIndex = mSongList.indexOf(uri);
+
                     /**
                      * {@link com.example.myapplication.fragments.MusicControllerFragment#updateUI(Boolean)}
                      */
                     EventBus.getDefault().post(isPlaying());
+                }
+            });
+            mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    nextMusic();
                 }
             });
 

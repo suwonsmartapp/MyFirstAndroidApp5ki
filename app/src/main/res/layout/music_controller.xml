@@ -36,6 +36,7 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/prev_music_button"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:text="앞곡" />
@@ -47,6 +48,7 @@
         android:text="재생" />
 
     <Button
+        android:id="@+id/next_music_button"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:text="다음곡" />

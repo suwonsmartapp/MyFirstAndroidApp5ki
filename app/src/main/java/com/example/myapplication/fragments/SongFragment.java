@@ -76,7 +76,6 @@ public class SongFragment extends Fragment {
             String title = retriever.extractMetadata((MediaMetadataRetriever.METADATA_KEY_TITLE));
             String artist = retriever.extractMetadata((MediaMetadataRetriever.METADATA_KEY_ARTIST));
             String duration = retriever.extractMetadata((MediaMetadataRetriever.METADATA_KEY_DURATION));
-
             // 오디오 앨범 자켓 이미지
 //            byte albumImage[] = retriever.getEmbeddedPicture();
 //            if (null != albumImage) {

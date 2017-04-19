@@ -115,7 +115,8 @@ public class PlayerFragment extends Fragment {
         }
     };
 
-    private void updateUI(boolean playing) {
+    @Subscribe
+    public void updateUI(boolean playing) {
         if (playing) {
             MediaMetadataRetriever retriever = mService.getMetaDataRetriever();
             if (retriever != null) {
@@ -142,7 +143,6 @@ public class PlayerFragment extends Fragment {
         updateTimer(playing);
     }
 
-    @Subscribe
     public void updateTimer(boolean isPlaying) {
         if (!isPlaying) {
             if (mCountDownTimer != null) {
