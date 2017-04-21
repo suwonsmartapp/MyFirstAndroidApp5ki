@@ -14,11 +14,38 @@ android {
         // Enabling multidex support.
         multiDexEnabled true
     }
-    buildTypes {
+    signingConfigs {
         release {
-            minifyEnabled true
+            storeFile file("../keystore/test_key.jks")     // 키스토어 위치
+            storePassword _storePassword
+            keyAlias _keyAlias
+            keyPassword _keyPassword
+        }
+    }
+    buildTypes {
+        // APK 생성 시 버전명 자동 기입하기
+        applicationVariants.all { variant ->
+            variant.outputs.each { output ->
+                output.outputFile = new File(
+                        output.outputFile.parent,
+                        output.outputFile.name.replace(".apk",
+                                "-${variant.versionName}.apk")
+                )
+            }
+        }
+        release {
+            signingConfig signingConfigs.release    // 여기
+            minifyEnabled true      // 난독화
+            zipAlignEnabled true    // zipAlign
+            shrinkResources true    // 미사용 리소스 제거
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
     }
     dataBinding {
         enabled = true
